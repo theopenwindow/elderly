@@ -1,0 +1,106 @@
+#container {
+	background-color: lightblue;
+	margin:2%;
+	height:3000px;
+}
+
+#lead {
+	background-color: lightpink;
+	height: 20%;
+}
+
+h1 {
+	text-align: center;
+	margin:1%;
+	padding-top: 5%;
+	padding-bottom: 5%;
+	font-family: 'Slabo 27px', serif;
+}
+
+.lead_part {
+	background-color: lightyellow;
+	width:35%;
+	float: left;
+	margin: 2.5%;
+	padding-left:5%;
+	padding-right: 5%;
+}
+
+.img {
+	width:80%;
+	margin-left: 10%;
+}
+
+#ER {
+	background-color: lightgreen;
+	height:15%;
+	padding: 10%
+}
+
+#chart1 {
+	background-color: lightyellow;
+	width:60%;
+	height: 100%;
+	float: left;
+}
+
+#chart1_intro {
+	background-color: lightyellow;
+	width:30%;
+	margin-left:5%;
+	float:left;
+}
+
+.btn {
+	float:left;
+	margin-right: 2%;
+  background: #fafafa;
+
+  -webkit-border-radius: 7;
+  -moz-border-radius: 7;
+  border-radius: 7px;
+  font-family: Arial;
+  color: #000000;
+  font-size: 13px;
+  padding: 5px 10px 5px 10px;
+  border: solid #cccccc 0.5px;
+  text-decoration: none;
+   cursor: pointer;
+}
+
+.btn:hover {
+  background: #ffffff;
+  background-image: -webkit-linear-gradient(top, #fafafa, #cdcfd1);
+  background-image: -moz-linear-gradient(top, #fafafa, #cdcfd1);
+  background-image: -ms-linear-gradient(top, #fafafa, #cdcfd1);
+  background-image: -o-linear-gradient(top, #fafafa, #cdcfd1);
+  background-image: linear-gradient(to bottom, #fafafa, #cdcfd1);
+  text-decoration: none;
+}
+
+#chart1_text {
+	padding: 7%;
+}
+
+p{
+	font-family: 'Abel', sans-serif;
+	font-size: 15px;
+}
+
+#Insurance {
+	background-color: lightpink;
+	height:20%;
+	padding:10%;
+}
+
+h2 {
+	margin:1%;
+	padding-top: 2%;
+	padding-bottom: 2%;
+}
+
+
+
+#US {
+	background-color: lightgreen;
+}
