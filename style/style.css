@@ -1,12 +1,47 @@
-#container {
-	background-color: lightblue;
-	margin:2%;
-	height:3000px;
+* {
+    box-sizing: border-box;
 }
 
-#lead {
-	background-color: lightpink;
-	height: 20%;
+.row:after {
+    content: "";
+    clear: both;
+    display: block;
+}
+
+.row{
+	height:20%;
+}
+
+[class*="col-"] {
+    float: left;
+    padding: 5%;
+}
+
+/* For desktop: */
+.col-1 {width: 8.33%;}
+.col-2 {width: 16.66%;}
+.col-3 {width: 25%;}
+.col-4 {width: 33.33%;}
+.col-5 {width: 41.66%;}
+.col-6 {width: 50%;}
+.col-7 {width: 58.33%;}
+.col-8 {width: 66.66%;}
+.col-9 {width: 75%;}
+.col-10 {width: 83.33%;}
+.col-11 {width: 91.66%;}
+.col-12 {width: 100%;}
+
+@media only screen and (max-width: 768px) {
+    /* For mobile phones: */
+    [class*="col-"] {
+        width: 100%;
+    }
+}
+
+.container {
+	background-color: lightblue;
+	margin:5%;
+	height:3000px;
 }
 
 h1 {
@@ -17,31 +52,14 @@ h1 {
 	font-family: 'Slabo 27px', serif;
 }
 
-.lead_part {
-	background-color: lightyellow;
-	width:35%;
-	float: left;
-	margin: 2.5%;
-	padding-left:5%;
-	padding-right: 5%;
-}
-
 .img {
 	width:80%;
 	margin-left: 10%;
 }
 
-#ER {
-	background-color: lightgreen;
-	height:15%;
-	padding: 10%
-}
-
 #chart1 {
 	background-color: lightyellow;
-	width:60%;
-	height: 100%;
-	float: left;
+	height:80%;
 }
 
 #chart1_intro {
@@ -78,19 +96,13 @@ h1 {
   text-decoration: none;
 }
 
-#chart1_text {
-	padding: 7%;
+.chart_text {
+	padding-top: 20px;
 }
 
 p{
 	font-family: 'Abel', sans-serif;
 	font-size: 15px;
-}
-
-#Insurance {
-	background-color: lightpink;
-	height:20%;
-	padding:10%;
 }
 
 h2 {
@@ -101,6 +113,3 @@ h2 {
 
 
 
-#US {
-	background-color: lightgreen;
-}
