@@ -1,0 +1,171 @@
+<!-- <button id="gov">government</button>
+ -->
+<div class="dropdown">
+  <button class="dropbtn">Insurance Scheme</button>
+  <div class="dropdown-content">
+    <a href="#" id="gov">Government medical insurance</a>
+    <a href="#" id="emp">Urban employee medical insurance</a>
+    <a href="#" id="res">Urban resident medical insurance</a>
+    <a href="#" id="cop">New cooperative medical insurance</a>
+    <a href="#" id="prv">Private medical insurance</a>
+    <a href="#" id="oth">Other medical insurance</a>
+  </div>
+</div>
+<div id="chart"></div>
+
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+<script type="text/javascript">
+    var fullWidthSquare = 1100;
+    var fullHeightSquare = 500;
+
+    var svgSquare = d3.select("#chart")
+                      .append("svg")
+                      .attr("width", fullWidthSquare)
+                      .attr("height", fullHeightSquare);
+    var rw = 4,
+        rh = 4;
+
+    d3.csv("insurance_all.csv", function(error, data){
+        if(error){
+            console.log("error reading file");
+        }
+
+        //console.log(data);
+
+        svgSquare.selectAll("rect")
+                .data(data)
+                .enter()
+                .append("rect")
+                .attr("transform", function(d,i){
+                    if(i<200){
+                        return "translate(" +i*5+ ",0)";
+                    }else if(i<400){
+                        return "translate(" +(i-200)*5+ ",5)";
+                    }else if(i<3000){
+                        return "translate(" +(i-200)*0.5+ ",20)";
+                    }else if(i<4000){
+                        return "translate(" +(i-300)*10+ ",30)";
+                    }else if(i<5000){
+                        return "translate(" +(i-400)*10+ ",40)";
+                    }else if(i<6000){
+                        return "translate(" +(i-500)*10+ ",50)";
+                    }else if(i<7000){
+                        return "translate(" +(i-600)*10+ ",60)";
+                    }else if(i<8000){
+                        return "translate(" +(i-700)*10+ ",70)";
+                    }else if(i<9000){
+                        return "translate(" +(i-800)*10+ ",80)";
+                    }else if(i<20000){
+                        return "translate(" +(i-900)*10+ ",90)";
+                    }
+                })
+                .attr("width", rw)
+                .attr("height", rh)
+                .attr("fill", function(d){
+                    console.log(d.insurance);
+                    if(d.insurance == "Government medical insurance"){
+                        return "red";
+                    }else if(d.insurance == "Urban employee medical insurance"){
+                        return "orange";
+                    }else if(d.insurance == "Urban resident medical insurance"){
+                        return "yellow";
+                    }else if(d.insurance == "New cooperative medical insurance"){
+                        return "green";
+                    }else if(d.insurance == "Private medical insurance"){
+                        return "blue";
+                    }else{
+                        return "purple";
+                    }
+                })
+                .attr("class", "ins")
+                .attr("id", function(d){
+                    return d.abb ;
+                });             
+
+
+        d3.selectAll("#gov").on("click", function(d){
+            d3.selectAll(".ins").style("opacity", 0.3);
+            d3.selectAll("#Government").style("opacity", 1);
+        });
+        d3.selectAll("#emp").on("click", function(d){
+            console.log("click");
+            d3.selectAll(".ins").style("opacity", 0.3);
+            d3.selectAll("#Urban_employee").style("opacity", 1);
+        });
+        d3.selectAll("#res").on("click", function(d){
+            console.log("click");
+            d3.selectAll(".ins").style("opacity", 0.3);
+            d3.selectAll("#Urban_resident").style("opacity", 1);
+        });
+        d3.selectAll("#cop").on("click", function(d){
+            console.log("click");
+            d3.selectAll(".ins").style("opacity", 0.3);
+            d3.selectAll("#New_cooperative").style("opacity", 1);
+        });
+        d3.selectAll("#prv").on("click", function(d){
+            console.log("click");
+            d3.selectAll(".ins").style("opacity", 0.3);
+            d3.selectAll("#Private").style("opacity", 1);
+        });
+        d3.selectAll("#oth").on("click", function(d){
+            console.log("click");
+            d3.selectAll(".ins").style("opacity", 0.3);
+            d3.selectAll("#Other").style("opacity", 1);
+        });
+    })
+
+
+</script>
+<style>
+#chart {
+    margin:5%;
+}
+
+/* Style The Dropdown Button */
+.dropbtn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {background-color: #f1f1f1}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {
+    background-color: #3e8e41;
+}
+</style>
+

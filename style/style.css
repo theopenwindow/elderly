@@ -14,7 +14,7 @@
 
 [class*="col-"] {
     float: left;
-    padding: 5%;
+    padding: 4%;
 }
 
 /* For desktop: */
@@ -58,7 +58,6 @@ h1 {
 }
 
 #chart1 {
-	background-color: lightyellow;
 	height:80%;
 }
 
@@ -96,6 +95,23 @@ h1 {
   text-decoration: none;
 }
 
+.selected{
+    background: lightgrey;
+    color: #fff;
+}
+/*select{
+    background: #fff;
+    color: #E3314C;
+    border: 1px solid #E3314C;
+    padding: 7px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-radius: 4px;
+    outline: none;
+    margin-right: 10px;
+    font-size: 12px;
+}*/
+
 .chart_text {
 	padding-top: 20px;
 }
@@ -111,5 +127,146 @@ h2 {
 	padding-bottom: 2%;
 }
 
+/*chart.js*/
+    #lineChart{
+        margin: auto;
+        width: 700px;
+    }
+    .axis text{
+        font-family: 'Roboto', sans-serif;
+        fill: #444;
+        font-size: 14px;
+    }
+    .y.axis path{
+        fill: none;
+        stroke: none;
+        shape-rendering: crispEdges;
+    }
+    .axis line {
+        fill: none;
+        stroke: #999;
+        shape-rendering: crispEdges;
+    }
+    
+    .chart .x.axis path{
+        fill: none;
+        stroke: none;
+    }
+    .bars:hover{
+        fill: #E3314C;
+    }
+    .value{
+        font-size: 12px;
+        color: #444;
+    }
+    path.line{
+        fill: none;
+        stroke-width: 1.5px;
+        transition: 0.1s;
+    }
+/*        g.urban path.line{
+        stroke: #418FC6;
+    }
+    g.rural path.line{
+        stroke: #E3314C;
+    }
+    g.total path.line{
+        stroke: black;
+    }*/
+    g.urban circle{
+        fill: #418FC6;
+        transition: 0.1s;
+    }
+    g.rural circle{
+        fill: #E3314C;
+        transition: 0.1s;
+    }
+    g.line{
+        opacity: 0.8;
+    }
+    g.line.unfocused{
+        opacity: 0.5;
+    }
+    g.line.focused{
+        opacity: 1;
+    }
+    g.line.unfocused path.line{
+        stroke-width: 1px;
+    }
+    g.line.focused path.line{
+        stroke-width: 3px;
+    }
+    g.line text.label{
+        font-family: 'Roboto', sans-serif;
+        font-size: 12px;
+        font-weight: lighter;
+        cursor: pointer;
+    }
+    g.line.bmw text{
+        fill: #418FC6;
+    }
+    g.line.audi text{
+        fill: #E3314C;
+    }
+    g.line text.notDisp{
+        display: none;
+    }
+    text.dotVal{
+        font-family: 'Open Sans', sans-serif;
+        font-size: 12px;
+    }
+    .tick text{
+        text-anchor: end;
+    }
+    .lineChart .y .tick line{
+        stroke-dasharray: 2,5;
+    }
+    .lineChart .x.axis path{
+        fill: none;
+        stroke: #999;
+    }
 
+/*table*/
+    table {
+        cursor: pointer;
+        width: 800px;}
+    th, td {
+        padding: 2px 0px 2px 10px;
+        border-spacing: 0px;
+        margin:0px;
+        font-family: 'Abel', sans-serif;
+        font-size: 13px;}
+    th {
+        text-transform: uppercase;
+        border-bottom: 2px solid #111111;
+        border-top: 1px solid #999;
+        text-align: left;}
+    tr.even {
+        background-color: #efefef;}
+    tr:hover {
+        background-color: #c3e6e5;}
 
+/*chart 2*/
+    #chart2 {
+        margin-top: 1%;
+    }
+/*chart 3*/
+
+    #chart3 {
+        height:100%;
+        margin-top: 5%;
+        }
+
+     g .axis line,
+     g .axis_left line{
+        fill: none;
+        stroke: white;
+        stroke-width: 0.5px;
+        shape-rendering: crispEdges;
+    }
+
+    .axis text,
+    .axis_left text {
+        font-family: 'Abel', sans-serif;
+        font-size: 12px;
+    }

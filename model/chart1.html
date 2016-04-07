@@ -1,0 +1,586 @@
+<body>
+    <div id="lineChart"></div>
+    <div class="col-sm-6 col-sm-offset-3"><button id="group1" type="button" class="selected">Employment Rate</button><button id="group2" type="button">Hukou</button><button id="group3" type="button">Gender</button></div>
+</body>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+
+<script type="text/javascript">
+            var fullHeightLine = 350;
+            var fullWidthLine = 700;
+            
+            var marginLine = {top:12, bottom:40, left:80, right:80};
+            
+            var heightLine = fullHeightLine - marginLine.top - marginLine.bottom;
+            var widthLine = fullWidthLine - marginLine.left - marginLine.right;
+            
+            /*xScaleLine = d3.time.scale().range([0,widthLine]);
+            yScaleLine = d3.scale.linear().range([0,heightLine]);*/
+            xScaleLine = d3.scale.ordinal().rangeRoundBands([0, widthLine],1)
+            yScaleLine = d3.scale.linear().range([0, heightLine]);
+            
+            var svgLine = d3.select("#lineChart")
+                .append("svg")
+                .attr("class","lineChart")
+                .attr("width",fullWidthLine)
+                .attr("height",fullHeightLine)
+                .append("g")
+                .attr("transform","translate(" + marginLine.left + "," + marginLine.top + ")");
+            
+            showlegend();
+            
+            var xAxisLine = d3.svg.axis()
+                .scale(xScaleLine)
+                .orient("bottom")
+                .ticks(5)
+                .tickPadding([8])
+                .tickSize([5]);
+            
+            var yAxisLine = d3.svg.axis()
+                .scale(yScaleLine)
+                .orient("right")
+                .ticks(4)
+                .tickFormat(function(d) { return d*100 +"%"; })
+                .tickPadding([-widthLine-7])
+                .tickSize([widthLine]);
+            
+            var line = d3.svg.line()
+                .x(function(d){
+//???console.log(d);  
+                    return xScaleLine(d.age);
+                })
+                .y(function(d){
+                    return yScaleLine(d.amount);
+                });
+
+
+            
+            d3.csv("employmentRate.csv", function(error, data) {
+                if (error) {
+                    console.log("Had an error loading file.");
+                }
+ 
+                var ages = d3.keys(data[0]).slice(0,8);
+                var schemes = d3.keys()
+// console.log(ages);
+                
+                var dataset = [];
+                
+                data.forEach(function(d,i){
+                    var employmentRates = [];
+                    ages.forEach(function(y){
+                        if(d[y]){
+                            employmentRates.push({
+                                scheme: d.scheme,
+                                age: y,
+                                amount: d[y]
+                            });
+                        }
+                    });
+
+                    dataset.push({
+                        scheme: d.scheme,
+                        rates: employmentRates
+                    });
+                });
+/*
+console.log(data);
+console.log(dataset);*/
+
+                xScaleLine.domain(ages.map(function(d) { 
+// console.log(d);
+                            return d; 
+                        }));
+
+
+                function getVal(myScheme){
+                    return dataset.filter(function(d){
+                        return d.scheme == myScheme;
+                    });
+                };
+                var curData = d3.merge([getVal("Total"), getVal("Total"), getVal("Total"), getVal("Total")]); 
+                yScaleLine.domain([d3.max(curData, function(d){
+                    return d3.max(d.rates, function(d){
+// console.log(d.amount);
+                        return +d.amount;
+                    });
+                })*1.2, 0]);
+
+                
+// console.log(curData);                
+                var groups = svgLine.selectAll("g.line")
+                    .data(curData)
+                    .enter()
+                    .append("g")
+                    .attr("class", "line")
+                    .attr("stroke", "black");
+                 
+
+                groups.selectAll("path")
+                    .data(function(d){return [d.rates];})
+                    .enter()
+                    .append("path")
+                    .attr("class","line")
+                    .attr("d",line);
+                
+                svgLine.append("g")
+                    .call(xAxisLine)
+                    .attr("class","x axis lineChart")
+                    .attr("transform","translate(0," + heightLine + ")");
+                
+                svgLine.append("g")
+                    .call(yAxisLine)
+                    .attr("class","y axis lineChart")
+                    .selectAll("text")
+                    .style("text-anchor","end");
+                
+                svgLine.select(".y.axis")
+                    .append("line")
+                    .attr("x2",widthLine)
+                    .attr("y2",0);
+                
+               groups.selectAll("circle")
+                    .data(function(d){return d.rates;})
+                    .enter()
+                    .append("circle")
+                    .attr("cx",function(d){return xScaleLine(+d.age);})
+                    .attr("cy",function(d){return yScaleLine(+d.amount);})
+                    .attr("r",1.5);
+                
+                groups.selectAll("text.dotVal")
+                    .data(function(d){return d.rates;})
+                    .enter()
+                    .append("text")
+                    .attr("class","dotVal notDisp")
+                    .attr("x",function(d){return xScaleLine(+d.age);})
+                    .attr("y",function(d){return yScaleLine(+d.amount);})
+                    .attr("dy", -10)
+                    .style("text-anchor", "middle")
+                    .text(function(d){
+                        return d.amount;
+                    });
+                
+                groups.append("text")
+                    .datum(function(d){
+                        return {
+                            scheme: d.scheme, 
+                            lastRates: d.rates[d.rates.length - 1].amount
+                        };
+                    })
+                    .attr("x", widthLine)
+                    .attr("y", function(d){
+                        return yScaleLine(+d.lastRates);
+                    })
+                    .text(function(d){
+                            return d.scheme;
+                    })
+                    .attr("class", "label")
+                    .style("text-anchor","start")
+                    .attr("dx",8)
+                    .attr("dy",4);
+                
+                groups
+                    .on("mouseover",mouseOverFunc)
+                    .on("mouseout",mouseOutFunc);
+                
+                d3.selectAll("button").on("click",function(d){
+                    if(d3.select(this).attr("id") == "group1")
+                        var newData = d3.merge([getVal("Total"), getVal("Total"),getVal("Total"),getVal("Total")]);
+                    else if(d3.select(this).attr("id") == "group2")
+                        var newData = d3.merge([getVal("Rural"),getVal("Rural"),getVal("Urban"),getVal("Urban")]);
+                    else if(d3.select(this).attr("id") == "group3")
+                        var newData = d3.merge([getVal("Rural_Male"),getVal("Rural_Female"),getVal("Urban_Male"),getVal("Urban_Female")]);
+
+/*                d3.select("#group1").on("click", function(d){
+                    var newData = d3.merge([getVal("Total"), getVal("Total"),getVal("Total"),getVal("Total")]);
+                });
+                d3.select("#group2").on("click", function(d){
+                    var newData = d3.merge([getVal("Rural"),getVal("Rural"),getVal("Urban"),getVal("Urban")]);
+                });
+                d3.select("#gropu3").on("click", function(d){
+                    var newData = d3.merge([getVal("Rural_Male"),getVal("Rural_Female"),getVal("Urban_Male"),getVal("Urban_Female")]);
+                });*/
+
+
+                    d3.select(".y.axis.lineChart")
+                        .transition()
+                        .duration(1500)
+                        .call(yAxisLine)
+                        .selectAll("text")
+                        .style("text-anchor","end");
+                    
+                    d3.selectAll("button").classed("selected", false);
+                    d3.select(this).classed("selected", true);
+                    d3.selectAll("g.line")
+                        .select("path")
+                        .transition()
+                        .duration(1500)
+                        .attr("d",function(d,i){
+                            return line(newData[i].rates);
+                        })
+                        .attr("stroke", function(d,i,j){
+                            if(newData[i].rates[j].scheme.startsWith("R")){
+                                console.log("rural line");return "red";
+                            }
+                            else if(newData[i].rates[j].scheme.startsWith("U")){
+                                console.log("rural line");return "blue";
+                            }
+                        });
+ 
+                    d3.selectAll("g.line")
+                        .select("text.label")
+                        .transition()
+                        .duration(1500)
+                        .attr("y",function(d,i){
+                            var lastRates = newData[i].rates[newData[i].rates.length - 1].amount;
+                            return yScaleLine(+lastRates);
+                        })
+                        .text(function(d,i){
+                                return newData[i].scheme;
+                        })
+                        .attr("stroke", function(d,i,j){
+                            if(newData[i].rates[j].scheme.startsWith("R")){
+                                console.log("rural line");return "red";
+                            }
+                            else if(newData[i].rates[j].scheme.startsWith("U")){
+                                console.log("rural line");return "blue";
+                            }
+                        });
+                    
+                   groups.selectAll("circle")
+                        .data(function(d,i){
+                            return newData[i].rates;})
+                        .transition()
+                        .duration(1500)
+                        .attr("cy",function(d){return yScaleLine(+d.amount);})
+                        .attr("r",1.5);
+
+                    groups.selectAll("text.dotVal")
+                        .data(function(d,i){
+                            return newData[i].rates;})
+                        .transition()
+                        .duration(1500)
+                        .attr("y",function(d){return yScaleLine(+d.amount);})
+                        .attr("dy", -10)
+                        .text(function(d){
+                            return d.amount;
+                        });
+                });
+            });
+            
+            function mouseOverFunc(d){
+                d3.selectAll("g.line")
+                    .classed("unfocused", true)
+                    .selectAll("circle").attr("r",1);
+                d3.select(this)
+                    .classed("focused", true)
+                    .classed("unfocused", false)
+                    .selectAll("circle").attr("r",3);
+                d3.select(this).selectAll("text").style("display", "block");
+            }
+            
+            function mouseOutFunc(d){
+                d3.selectAll("g.line")
+                    .classed("unfocused",false)
+                    .classed("focused",false)
+                    .selectAll("circle").attr("r",1.5);
+                d3.selectAll("g.line").selectAll("text").style("display", null);
+            }
+            
+            function showlegend(){
+                var legend = svgLine.append("g").attr("class","legend");
+                
+                legend.append("circle")
+                    .style("fill","blue")
+                    .attr("cx",480)
+                    .attr("cy",30)
+                    .attr("r",2);
+                    
+                legend.append("circle")
+                    .style("fill","blue")
+                    .attr("cx",510)
+                    .attr("cy",30)
+                    .attr("r",2);
+                
+                legend.append("line")
+                    .style("stroke","blue")
+                    .style("stroke-width","2px")
+                    .attr("x1",480)
+                    .attr("y1",30)
+                    .attr("x2",510)
+                    .attr("y2",30);
+                
+                legend.append("text")
+                    .text("Rural")
+                    .style("font-size","12px")
+                    .attr("x",515)
+                    .attr("y",34);
+                    
+                legend.append("circle")
+                    .style("fill","red")
+                    .attr("cx",480)
+                    .attr("cy",45)
+                    .attr("r",2);
+                    
+                legend.append("circle")
+                    .style("fill","red")
+                    .attr("cx",510)
+                    .attr("cy",45)
+                    .attr("r",2);
+                
+                legend.append("line")
+                    .style("stroke","red")
+                    .style("stroke-width","2px")
+                    .attr("x1",480)
+                    .attr("y1",45)
+                    .attr("x2",510)
+                    .attr("y2",45);
+                
+                legend.append("text")
+                    .text("Audi")
+                    .style("font-size","12px")
+                    .attr("x",515)
+                    .attr("y",49);
+            }
+</script>
+    <style>
+        body{
+            font-family: 'Open Sans', sans-serif;
+        }
+        h1{
+            font-family: 'Roboto', sans-serif;
+            text-align: center;
+            margin: 40px;
+        }
+ /*       table{
+            font-size: 14px;
+            text-align: right;
+            margin: auto;
+            margin-bottom: 50px;
+            border-collapse: collapse;
+        }
+        th{
+            font-family: 'Roboto', sans-serif;
+            width: 100px;
+            padding: 5px;
+            cursor: pointer;
+        }
+        td{
+            border: 1px solid #fff;
+            padding: 5px;
+            background: #eee;
+        }
+        
+        tr:first-child th:first-child { 
+            border-top-left-radius: 10px; 
+        }
+        tr:first-child th:last-child { 
+            border-top-right-radius: 10px; 
+        }
+        tr:last-child td:first-child { 
+            border-bottom-left-radius: 10px; 
+        }
+        tr:last-child td:last-child { 
+            border-bottom-right-radius: 10px; 
+        }
+        
+        p{
+            margin: auto;
+            margin-bottom: 50px;
+        }
+        .main{
+            margin: auto;
+        }
+        .para{
+            text-align: justify;
+        }
+        .para.center{
+            margin-top: 50px;
+        }
+        .table{
+            width: 35%;
+            padding-left: 7%;
+        }
+        .source{
+            font-size: 14px;
+            margin-top: 30px;
+        }
+        #table1 th{
+            background: #418FC6;
+            color: #fff;
+        }
+        #table1 th:hover{
+            background: #63B1E8;
+            color: #fff;
+        }
+        #table2 th{
+            background: #D11F3A;
+            color: #fff;
+        }
+        #table2 th:hover{
+            background: #F3415C;
+            color: #fff;
+        }
+        .subti{
+            font-family: 'Roboto', sans-serif;
+            margin-bottom: 20px;
+        }
+        a:link, a:visited{
+            text-decoration: none;
+            color: #418FC6;
+        }
+        .model{
+            font-family: 'Roboto', sans-serif;
+            color: #444;
+        }
+        .title{
+            font-family: 'Roboto', sans-serif;
+            margin-bottom: 20px;
+        }
+        .tableTitle{
+            text-align: right;
+        }
+        .barChartTitle{
+            text-align: left;
+        }
+        .lineChartTitle{
+            float: left;
+            margin-top: 30px;
+        }*/
+        #lineChart{
+            margin: auto;
+            width: 700px;
+        }
+        .axis text{
+            font-family: 'Roboto', sans-serif;
+            fill: #444;
+            font-size: 14px;
+        }
+        .y.axis path{
+            fill: none;
+            stroke: none;
+            shape-rendering: crispEdges;
+        }
+        .axis line {
+            fill: none;
+            stroke: #999;
+            shape-rendering: crispEdges;
+        }
+        
+        .chart .x.axis path{
+            fill: none;
+            stroke: none;
+        }
+        .bars:hover{
+            fill: #E3314C;
+        }
+        .value{
+            font-size: 12px;
+            color: #444;
+        }
+        path.line{
+            fill: none;
+            stroke-width: 1.5px;
+            transition: 0.1s;
+        }
+/*        g.urban path.line{
+            stroke: #418FC6;
+        }
+        g.rural path.line{
+            stroke: #E3314C;
+        }
+        g.total path.line{
+            stroke: black;
+        }*/
+        g.urban circle{
+            fill: #418FC6;
+            transition: 0.1s;
+        }
+        g.rural circle{
+            fill: #E3314C;
+            transition: 0.1s;
+        }
+        g.line{
+            opacity: 0.8;
+        }
+        g.line.unfocused{
+            opacity: 0.5;
+        }
+        g.line.focused{
+            opacity: 1;
+        }
+        g.line.unfocused path.line{
+            stroke-width: 1px;
+        }
+        g.line.focused path.line{
+            stroke-width: 3px;
+        }
+        g.line text.label{
+            font-family: 'Roboto', sans-serif;
+            font-size: 12px;
+            font-weight: lighter;
+            cursor: pointer;
+        }
+        g.line.bmw text{
+            fill: #418FC6;
+        }
+        g.line.audi text{
+            fill: #E3314C;
+        }
+        g.line text.notDisp{
+            display: none;
+        }
+        text.dotVal{
+            font-family: 'Open Sans', sans-serif;
+            font-size: 12px;
+        }
+        .tick text{
+            text-anchor: end;
+        }
+        .lineChart .y .tick line{
+            stroke-dasharray: 2,5;
+        }
+        .lineChart .x.axis path{
+            fill: none;
+            stroke: #999;
+        }
+/*        .barChart .x .tick line{
+            stroke-dasharray: 2,5;
+        }
+        .barChart .x .tick:first-child line, .barChart .x .tick:nth-last-child(2) line{
+            stroke-dasharray: 5,0;
+        }*/
+        button{
+            background: #fff;
+            color: #E3314C;
+            border: 1px solid #E3314C;
+            padding: 7px;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            border-radius: 4px;
+            outline: none;
+            margin-right: 10px;
+            font-size: 12px;
+        }
+        button:hover{
+            background: #ffcccc;
+            cursor: pointer;
+        }
+        button.selected{
+            background: #E3314C;
+            color: #fff;
+        }
+        select{
+            background: #fff;
+            color: #E3314C;
+            border: 1px solid #E3314C;
+            padding: 7px;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            border-radius: 4px;
+            outline: none;
+            margin-right: 10px;
+            font-size: 12px;
+        }
+    </style>
+ 

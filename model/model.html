@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+		<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+		<link href='https://fonts.googleapis.com/css?family=Roboto:900' rel='stylesheet' type='text/css'>
+		<title>Audi is slowly catching up with BMW in the U.S.</title>
+
+    <style>
+        body{
+            font-family: 'Open Sans', sans-serif;
+        }
+        h1{
+            font-family: 'Roboto', sans-serif;
+            text-align: center;
+            margin: 40px;
+        }
+        table{
+            font-size: 14px;
+            text-align: right;
+            margin: auto;
+            margin-bottom: 50px;
+            border-collapse: collapse;
+        }
+        th{
+            font-family: 'Roboto', sans-serif;
+            width: 100px;
+            padding: 5px;
+            cursor: pointer;
+        }
+        td{
+            border: 1px solid #fff;
+            padding: 5px;
+            background: #eee;
+        }
+        
+        tr:first-child th:first-child { 
+            border-top-left-radius: 10px; 
+        }
+        tr:first-child th:last-child { 
+            border-top-right-radius: 10px; 
+        }
+        tr:last-child td:first-child { 
+            border-bottom-left-radius: 10px; 
+        }
+        tr:last-child td:last-child { 
+            border-bottom-right-radius: 10px; 
+        }
+        
+        p{
+            margin: auto;
+            margin-bottom: 50px;
+        }
+        .main{
+            margin: auto;
+        }
+        .para{
+            text-align: justify;
+        }
+        .para.center{
+            margin-top: 50px;
+        }
+        .table{
+            width: 35%;
+            padding-left: 7%;
+        }
+        .source{
+            font-size: 14px;
+            margin-top: 30px;
+        }
+        #table1 th{
+            background: #418FC6;
+            color: #fff;
+        }
+        #table1 th:hover{
+            background: #63B1E8;
+            color: #fff;
+        }
+        #table2 th{
+            background: #D11F3A;
+            color: #fff;
+        }
+        #table2 th:hover{
+            background: #F3415C;
+            color: #fff;
+        }
+        .subti{
+            font-family: 'Roboto', sans-serif;
+            margin-bottom: 20px;
+        }
+        a:link, a:visited{
+            text-decoration: none;
+            color: #418FC6;
+        }
+        .model{
+            font-family: 'Roboto', sans-serif;
+            color: #444;
+        }
+        .title{
+            font-family: 'Roboto', sans-serif;
+            margin-bottom: 20px;
+        }
+        .tableTitle{
+            text-align: right;
+        }
+        .barChartTitle{
+            text-align: left;
+        }
+        .lineChartTitle{
+            float: left;
+            margin-top: 30px;
+        }
+        #lineChart{
+            margin: auto;
+            width: 700px;
+        }
+        .axis text{
+            font-family: 'Roboto', sans-serif;
+            fill: #444;
+            font-size: 14px;
+        }
+        .y.axis path{
+            fill: none;
+            stroke: none;
+            shape-rendering: crispEdges;
+        }
+        .axis line {
+            fill: none;
+            stroke: #999;
+            shape-rendering: crispEdges;
+        }
+        
+        .chart .x.axis path{
+            fill: none;
+            stroke: none;
+        }
+        .bars:hover{
+            fill: #E3314C;
+        }
+        .value{
+            font-size: 12px;
+            color: #444;
+        }
+        path.line{
+            fill: none;
+            stroke-width: 1.5px;
+            transition: 0.1s;
+        }
+        g.bmw path.line{
+            stroke: #418FC6;
+        }
+        g.audi path.line{
+            stroke: #E3314C;
+        }
+        g.bmw circle{
+            fill: #418FC6;
+            transition: 0.1s;
+        }
+        g.audi circle{
+            fill: #E3314C;
+            transition: 0.1s;
+        }
+        g.line{
+            opacity: 0.8;
+        }
+        g.line.unfocused{
+            opacity: 0.5;
+        }
+        g.line.focused{
+            opacity: 1;
+        }
+        g.line.unfocused path.line{
+            stroke-width: 1px;
+        }
+        g.line.focused path.line{
+            stroke-width: 3px;
+        }
+        g.line text.label{
+            font-family: 'Roboto', sans-serif;
+            font-size: 12px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        g.line.bmw text{
+            fill: #418FC6;
+        }
+        g.line.audi text{
+            fill: #E3314C;
+        }
+        g.line text.notDisp{
+            display: none;
+        }
+        text.dotVal{
+            font-family: 'Open Sans', sans-serif;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .tick text{
+            text-anchor: end;
+        }
+        .lineChart .y .tick line{
+            stroke-dasharray: 2,5;
+        }
+        .lineChart .x.axis path{
+            fill: none;
+            stroke: #999;
+        }
+        .barChart .x .tick line{
+            stroke-dasharray: 2,5;
+        }
+        .barChart .x .tick:first-child line, .barChart .x .tick:nth-last-child(2) line{
+            stroke-dasharray: 5,0;
+        }
+        button{
+            background: #fff;
+            color: #E3314C;
+            border: 1px solid #E3314C;
+            padding: 7px;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            border-radius: 4px;
+            outline: none;
+            margin-right: 10px;
+            font-size: 12px;
+        }
+        button:hover{
+            background: #ffcccc;
+            cursor: pointer;
+        }
+        button.selected{
+            background: #E3314C;
+            color: #fff;
+        }
+        select{
+            background: #fff;
+            color: #E3314C;
+            border: 1px solid #E3314C;
+            padding: 7px;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            border-radius: 4px;
+            outline: none;
+            margin-right: 10px;
+            font-size: 12px;
+        }
+    </style>
+	</head>
+	<body>
+
+		<h1><span style="color:#D11F3A">Audi</span> is slowly catching up with BMW in the U.S.</h1>
+        <div class="main">
+          <div class="row">
+           <p style="text-align:center">By <span style="font-style:italic">Zhiming Sun</span></p>
+           
+           <div class="col-sm-4 col-sm-offset-2">
+            <p class="subti">HIGHLIGHTED MODELS</p>
+            <p>The most of BMW’s sales are contributed by 3 Series. Compared with the 3 Series, its competi- tor, Audi A4, wasn’t selling that well, probably because of its upcoming next generation in 2016. Audi only sold 25,841 units of A4. The number for the 3 series is 89,265.</p>
+            <p>However, Audi overwhelms BMW in terms of smaller car, the A3, competing with 1/2 Series of BMW in a sense. The A3 began a boost on its sales in 2014 when the current generation was first available in the U.S. It produced the sales of 32,732 in Nov. ‘15 YTD, making it the sec- ond-best seller for the brand, while BMW sold only 10,877 units of 1/2 Series.</p>
+            <p>The best seller for Audi has been Q5 for 3 years. Even this is already the 8th year in the current generation, the sales of Q5 in 2015 increased 8,080 to 45,949 from 2014. The competitor, BMW X3, is 2 years “younger” though, only achieved sales of 28,798.</p>
+            <div class="row barChart"><div id="barChartTitle" class=" col-sm-offset-1 col-sm-7 barChartTitle title" style="color: #D11F3A; padding-left:40px">Top 5 Sales in 2015</div>
+            <div class="col-sm-4" id="menu">
+                <select>
+                <option value="2011">2011</option>
+                <option value="2012">2012</option>
+                <option value="2013">2013</option>
+                <option value="2014">2014</option>
+                <option value="2015">2015</option>
+                </select>
+            </div>
+            </div>
+            </div>
+            
+            <div class="table col-sm-4">
+               <div class="tableTitle title" style="color: #418FC6; padding-right:15px">BMW Sales in 2014 & 2015</div>
+                <div id="table1"></div>
+                
+               <div class="tableTitle title" style="color: #D11F3A; padding-right:15px">Audi Sales in 2014 & 2015</div>
+                <div id="table2"></div>
+                
+            </div>
+            </div>
+            
+            <div class="row para center">
+               <div class="col-sm-6 col-sm-offset-3">
+                <p>As is shown in the graphics below, Audi’s core models are majorly in their later years of the generation lifecy- cle, except for the A3. This can be a reason that A4 sells unsatisfactorily. The all new A4 would be available next year, so we expect to see an increase on its sales. The Q7 is also going to be refreshed in 2016. However, it’s sales even increased this year, though it’s still behind BMW’s X5.</p>
+            </div>
+            </div>
+            
+            <div id="lineChart"><div class="lineChartTitle title" style="color: #D11F3A; padding-left:80px">Audi & BMW Sales (thousand vehicles, 2011-2015)</div></div>
+            
+            <div class="col-sm-6 col-sm-offset-3"><button id="group1" type="button" class="selected">A3 vs. 1/2 Series</button><button id="group2" type="button">A4 vs. 3 Series</button><button id="group3" type="button">Q5 vs. X3</button><button id="group4" type="button">Q7 vs. X5</button></div>
+            
+            <div class="row para center">
+               <div class="col-sm-6 col-sm-offset-3">
+                <p style="margin-top:50px">“As we head into the final sales month, we are on track to achieve our sixth-consecutive record year and exceed 200,000 annual sales for the first time,” said Mark Del Rosso, Executive Vice President and Chief Oper- ating Officer, Audi of America. “We expect this strong momentum will continue into 2016 as we refresh some of our most popular models, such as the Audi Q7, A4 and R8.”</p>
+            </div></div>
+            <div class="row col-sm-offset-3">
+            <p class="source"><span style="font-family: 'Roboto', sans-serif; font-size:16px;">Source</span></br><a href="https://www.audiusa.com/newsroom/news">Audi U.S. Press Release 2015</a></br><a href="https://www.press.bmwgroup.com">BMW Group U.S. Reports 2015</a></p></div>
+		</div>
+		
+
+	</body>
+
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>		
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/stupidtable/0.0.1/stupidtable.min.js"></script>
+
+		<!-- load the function file you need before you call it... -->
+		<!-- script type="text/javascript" src="js/tabulate.js"></script -->
+
+		<script type="text/javascript">
+                
+/*            var fullHeight = 250;
+            var fullWidth = 450;
+            
+            var margin = {top:12, bottom:20, left:60, right:40};
+            
+            var height = fullHeight - margin.top - margin.bottom;
+            var width = fullWidth - margin.left - margin.right;
+            
+            var xScale = d3.scale.linear().range([0,width]);
+            var yScale = d3.scale.ordinal().rangeRoundBands([0,height],0.5);
+            
+            var svg = d3.select(".barChart")
+                        .append("svg")
+                        .attr("class", "chart")
+                        .attr("width", fullWidth)
+						.attr("height", fullHeight)
+						.append("g")
+                        .attr("transform","translate(" + margin.left + "," + margin.top +")");
+
+            var xAxis = d3.svg.axis()
+                .scale(xScale)
+                .orient("top")
+                .ticks(5)
+                .tickPadding([-height-15])
+                .tickSize([height]);
+            
+            var yAxis = d3.svg.axis()
+                .scale(yScale)
+                .orient("left")
+            	.tickSize([0]);*/
+
+            
+			//Load in contents of CSV file, and do things to the data.
+
+/*			d3.csv("salesInYears.csv", function(error, data) {
+
+				if (error) {
+					console.log("Had an error loading file.");
+				}
+                
+                var bmw_data = [], audi_data = [];
+
+				data.forEach(function(d, i){
+					d.salesChange = ((d[2015] - d[2014]) / d[2014] * 100).toFixed(2);
+                    if(i<9)
+                        bmw_data.push([d.model, d[2014], d[2015], d.salesChange]);
+                    else
+                        audi_data.push([d.model, d[2014], d[2015], d.salesChange]);
+                    
+				});
+
+				console.log(data);
+                
+                bmw_data.sort(function(a,b){return a[2] - b[2];});
+                audi_data.sort(function(a,b){return a[2] - b[2];});
+                
+                bmw_data.forEach(function(d, i){
+                                 d[3] += "%";
+                                 });
+                
+                audi_data.forEach(function(d, i){
+                                 d[3] += "%";
+                                 });
+
+                var table = d3.select("#table1").append("table");
+                var thead = table.append("thead").append("tr");
+                var tbody = table.append("tbody");
+                
+                var colorScale = d3.scale.linear()
+				.domain(d3.extent(bmw_data, function(d){return d[2];}))
+				.range(["#A1DFFF", "#63B1E8"]);
+                
+                thead
+                    .selectAll("th")
+                    .data(["Model","Sales In 2014","Sales In 2015","Sales Change"])
+                    .enter()
+                    .append("th")
+                    .text(function(d){
+                        return d;
+                    });
+                
+                rows = tbody
+                    .selectAll("tr")
+                    .data(bmw_data)
+                    .enter()
+                    .append("tr");
+                
+                cells = rows
+                    .selectAll("td")
+                    .data(function(d){return d;})
+                    .enter()
+                    .append("td")
+                    .style("background",function(d,i){
+                        if(i === 2){
+                            return colorScale(d);
+                            }})
+                    .text(function(d){return d;});
+                
+                table = d3.select("#table2").append("table");
+                thead = table.append("thead").append("tr");
+                tbody = table.append("tbody");
+                
+                var colorScale2 = d3.scale.linear()
+				.domain(d3.extent(audi_data, function(d){return +d[2];}))
+				.range(["#FFAFAA", "#F3415C"]);
+                
+                thead
+                    .selectAll("th")
+                    .data(["Model","Sales In 2014","Sales In 2015","Sales Change"])
+                    .enter()
+                    .append("th")
+                    .text(function(d){
+                        return d;
+                    });
+                
+                rows = tbody
+                    .selectAll("tr")
+                    .data(audi_data)
+                    .enter()
+                    .append("tr");
+                
+                cells = rows
+                    .selectAll("td")
+                    .data(function(d){return d;})
+                    .enter()
+                    .append("td")
+                    .style("background",function(d,i){
+                        if(i === 2){
+                            return colorScale2(d);
+                            }})
+                    .text(function(d){return d;});
+                
+                d3.selectAll("tr").select("td").attr("class","model");
+                
+                d3.select("#table1")
+                    .selectAll("th")
+                    .data(["string","int","int","int"])
+                    .attr("data-sort",function(d){return d;});
+                
+                d3.select("#table2")
+                    .selectAll("th")
+                    .data(["string","int","int","int"])
+                    .attr("data-sort",function(d){return d;}); 
+                
+                $("table").stupidtable();
+                
+                //--Barcharts!
+                
+                var column = d3.select("#menu select").property("value");
+                var dataset = top_5_sales(data, column);
+                
+                svg.append("g")
+                    .attr("class", "x axis")
+                    .attr("transform", "translate(0," + height + ")")
+                    .call(xAxis);
+                
+                svg.append("g")
+                    .attr("class", "y axis")
+                    .call(yAxis);
+                
+                svg.select(".x.axis")
+                    .append("line")
+                    .attr("y1", -height)
+                    .attr("x1", width)
+                    .attr("y2", 0)
+                    .attr("x2", width);
+                
+                d3.select("#menu select")
+                    .on("change", function() {
+                        column = d3.select("#menu select").property("value");
+                        dataset = top_5_sales(data, column);
+                        redraw(dataset, column);
+                        d3.select("#barChartTitle")
+                            .text("Top 5 Sales in " + column);
+                });
+
+                redraw(dataset, column);
+                d3.select("#barChartTitle")
+                    .text("Top 5 Sales in " + column);
+
+			});
+            
+            function top_5_sales(data, column){
+                
+                var newData = data.sort(function(a,b){
+                    return b[column] - a[column];
+                })
+                .slice(0,5);
+                
+                return newData;
+            }
+            
+            function redraw(data, column){
+                
+                var colorScale = d3.scale.linear()
+				.domain(d3.extent(data, function(d){return +d[column];}))
+				.range(["#FFAFAA", "#F3415C"]);
+                
+                var domainMax = d3.max(data,function(d){
+                    return +d[column];
+                });
+                
+                //domainMax = Math.round(domainMax/Math.pow(10,String(domainMax).length-1))*Math.pow(10,String(domainMax).length-1);
+                
+                xScale.domain([0,domainMax*1.05]);
+                yScale.domain(data.map(function(d){return d.model}));
+                
+                svg.select(".x.axis")
+                    .transition()
+                    .duration(500)
+                    .call(xAxis);
+                
+                svg.select(".y.axis")
+                    .transition()
+                    .duration(500)
+                    .call(yAxis);
+                
+                var rects = svg.selectAll("rect.bars")
+						.data(data, function(d){
+                            //console.log(d.model);
+                            return d.model;
+                        });
+                
+                rects
+                    .attr("fill", "steelblue");
+                
+                rects
+                    .enter()
+                    .append("rect")
+                    .attr("class","bars")
+                    .attr("fill",  function(d){return colorScale(+d[column]);})
+                    .attr("width", 0);
+                
+                rects
+                    .exit()
+                    .transition()
+                    .duration(500)
+                    .attr("width", 0)
+                    .remove();
+                
+                rects
+                    .transition()
+                    .duration(500)
+                    .attr("x", 0)
+                    .attr("y",function(d){
+                        return yScale(d.model);
+                    })
+                    .attr("width",function(d){
+                        return xScale(+d[column]);
+                    })
+                    .attr("height", yScale.rangeBand())
+                    .attr("fill",  function(d){return colorScale(+d[column]);});
+                
+                var labels = svg.selectAll("text.value")
+                    .data(data, function(d){
+                        return d.model;
+                    });
+                
+                labels
+                    .enter()
+                    .append("text")
+                    .classed("value","true");
+                
+                labels
+                    .exit()
+                    .remove();
+                
+                labels
+                    .transition()
+                    .duration(500)
+                    .text(function(d){return d3.format(",")(+d[column]);})
+                    .attr("x",function(d){return xScale(+d[column]);})
+                    .attr("y",function(d){return yScale(d.model);})
+                    .attr("dx",5)
+                    .attr("dy",11);
+            }*/
+            
+            //Line Chart!
+            
+            var fullHeightLine = 350;
+            var fullWidthLine = 700;
+            
+            var marginLine = {top:12, bottom:40, left:80, right:80};
+            
+            var heightLine = fullHeightLine - marginLine.top - marginLine.bottom;
+            var widthLine = fullWidthLine - marginLine.left - marginLine.right;
+            
+            xScaleLine = d3.time.scale().range([0,widthLine]);
+            yScaleLine = d3.scale.linear().range([0,heightLine]);
+            
+            var svgLine = d3.select("#lineChart")
+                .append("svg")
+                .attr("class","lineChart")
+                .attr("width",fullWidthLine)
+                .attr("height",fullHeightLine)
+                .append("g")
+                .attr("transform","translate(" + marginLine.left + "," + marginLine.top + ")");
+            
+            showlegend();
+            
+            var xAxisLine = d3.svg.axis()
+                .scale(xScaleLine)
+                .orient("bottom")
+                .tickFormat(function(d){return d3.time.format("%Y")(d);})
+                .ticks(5)
+                .tickPadding([8])
+                .tickSize([5]);
+            
+            var yAxisLine = d3.svg.axis()
+                .scale(yScaleLine)
+                .orient("right")
+                .ticks(7)
+                .tickPadding([-widthLine-7])
+                .tickSize([widthLine]);
+            
+            var line = d3.svg.line()
+                .x(function(d){
+                    console.log(d);
+                    return xScaleLine(d3.time.format("%Y").parse(d.year));
+                })
+                .y(function(d){
+                    return yScaleLine(+d.amount);
+                });
+
+            
+            d3.csv("salesInYears.csv", function(error, data) {
+ // console.log(data);               
+				if (error) {
+					console.log("Had an error loading file.");
+				}
+
+                var years = d3.keys(data[0]).slice(0,5);
+                
+                var dataset = [];
+                
+                data.forEach(function(d,i){
+                    var vehicleSales = [];
+                    years.forEach(function(y){
+                        if(d[y]){
+                            vehicleSales.push({
+                                model: d.model,
+                                year: y,
+                                amount: d[y]/1000
+                            });
+                        }
+                    });
+                    
+                    dataset.push({
+                        model: d.model,
+                        sales: vehicleSales
+                    });
+                });
+// console.log(dataset);
+                
+                xScaleLine.domain(d3.extent(years, function(d){
+                    console.log(d3.time.format("%Y").parse(d));
+                    return d3.time.format("%Y").parse(d);
+                }));
+                
+                function getVal(modelName){
+                    return dataset.filter(function(d){
+                        return d.model == modelName;
+                    });
+                }
+                
+                var curData = d3.merge([getVal("A3"),getVal("1/2 Series")]);
+                
+                yScaleLine.domain([d3.max(curData, function(d){
+                                            console.log(d.sales);
+
+                    return d3.max(d.sales, function(d){
+                        return +d.amount;
+                    });
+                })*1.2, 0]);
+
+// console.log(curData);
+                var groups = svgLine.selectAll("g.line")
+                    .data(curData)
+                    .enter()
+                    .append("g")
+                    .attr("class",function(d){
+                        if(d.model.startsWith("A") || d.model.startsWith("Q"))
+                            // console.log("audi");
+                            return "audi line";
+                        else
+                            return "bmw line";
+                    });
+
+                groups.selectAll("path")
+                    .data(function(d){return [d.sales];})
+                    .enter()
+                    .append("path")
+                    .attr("class","line")
+                    .attr("d",line);
+                
+                svgLine.append("g")
+                    .call(xAxisLine)
+                    .attr("class","x axis lineChart")
+                    .attr("transform","translate(0," + heightLine + ")");
+                
+                svgLine.append("g")
+                    .call(yAxisLine)
+                    .attr("class","y axis lineChart")
+                    .selectAll("text")
+                    .style("text-anchor","end");
+                
+                svgLine.select(".y.axis")
+                    .append("line")
+                    .attr("x2",widthLine)
+                    .attr("y2",0);
+                
+                groups.selectAll("circle")
+                    .data(function(d){return d.sales;})
+                    .enter()
+                    .append("circle")
+                    .attr("cx",function(d){return xScaleLine(d3.time.format("%Y").parse(d.year));})
+                    .attr("cy",function(d){return yScaleLine(+d.amount);})
+                    .attr("r",1.5);
+                
+                groups.selectAll("text.dotVal")
+                    .data(function(d){return d.sales;})
+                    .enter()
+                    .append("text")
+                    .attr("class","dotVal notDisp")
+                    .attr("x",function(d){return xScaleLine(d3.time.format("%Y").parse(d.year));})
+                    .attr("y",function(d){return yScaleLine(+d.amount);})
+                    .attr("dy", -10)
+                    .style("text-anchor", "middle")
+                    .text(function(d){
+                        return d3.format(",")(parseInt(d.amount*1000));
+                    });
+                
+                groups.append("text")
+                    .datum(function(d){
+                        return {
+                            model: d.model, 
+                            lastSales: d.sales[d.sales.length - 1].amount
+                        };
+                    })
+                    .attr("x", widthLine)
+                    .attr("y", function(d){
+                        return yScaleLine(+d.lastSales);
+                    })
+                    .text(function(d){
+                            return d.model;
+                    })
+                    .attr("class", "label")
+                    .style("text-anchor","start")
+                    .attr("dx",8)
+                    .attr("dy",4);
+                
+                groups
+                    .on("mouseover",mouseOverFunc)
+                    .on("mouseout",mouseOutFunc);
+                
+                d3.selectAll("button").on("click",function(d){
+                    if(d3.select(this).attr("id") == "group1")
+                        var newData = d3.merge([getVal("A3"),getVal("1/2 Series")]);
+                    else if(d3.select(this).attr("id") == "group2")
+                        var newData = d3.merge([getVal("A4"),getVal("3 Series")]);
+                    else if(d3.select(this).attr("id") == "group3")
+                        var newData = d3.merge([getVal("Q5"),getVal("X3")]);
+                    else if(d3.select(this).attr("id") == "group4")
+                        var newData = d3.merge([getVal("Q7"),getVal("X5")]);
+                    
+                    yScaleLine.domain([d3.max(newData, function(d){
+                        return d3.max(d.sales, function(d){
+                            return +d.amount;
+                        });
+                    })*1.2, 0]);
+                    
+                    d3.select(".y.axis.lineChart")
+                        .transition()
+                        .duration(1500)
+                        .call(yAxisLine)
+                        .selectAll("text")
+                        .style("text-anchor","end");
+                    
+                    d3.selectAll("button").classed("selected", false);
+                    d3.select(this).classed("selected", true);
+                    d3.selectAll("g.line")
+                        .select("path")
+                        .transition()
+                        .duration(1500)
+                        .attr("d",function(d,i){
+                            return line(newData[i].sales);
+                        });
+                    
+                    d3.selectAll("g.line")
+                        .select("text.label")
+                        .transition()
+                        .duration(1500)
+                        .attr("y",function(d,i){
+                            var lastSales = newData[i].sales[newData[i].sales.length - 1].amount;
+                            return yScaleLine(+lastSales);
+                        })
+                        .text(function(d,i){
+                                return newData[i].model;
+                        });
+                    
+                    groups.selectAll("circle")
+                        .data(function(d,i){
+                            return newData[i].sales;})
+                        .transition()
+                        .duration(1500)
+                        .attr("cy",function(d){return yScaleLine(+d.amount);})
+                        .attr("r",1.5);
+
+                    groups.selectAll("text.dotVal")
+                        .data(function(d,i){
+                            return newData[i].sales;})
+                        .transition()
+                        .duration(1500)
+                        .attr("y",function(d){return yScaleLine(+d.amount);})
+                        .attr("dy", -10)
+                        .text(function(d){
+                            return d3.format(",")(parseInt(d.amount*1000));
+                        });
+                });
+            });
+            
+            function mouseOverFunc(d){
+                d3.selectAll("g.line")
+                    .classed("unfocused", true)
+                    .selectAll("circle").attr("r",1);
+                d3.select(this)
+                    .classed("focused", true)
+                    .classed("unfocused", false)
+                    .selectAll("circle").attr("r",3);
+                d3.select(this).selectAll("text").style("display", "block");
+            }
+            
+            function mouseOutFunc(d){
+                d3.selectAll("g.line")
+                    .classed("unfocused",false)
+                    .classed("focused",false)
+                    .selectAll("circle").attr("r",1.5);
+                d3.selectAll("g.line").selectAll("text").style("display", null);
+            }
+            
+            function showlegend(){
+                var legend = svgLine.append("g").attr("class","legend");
+                
+                legend.append("circle")
+                    .style("fill","#418FC6")
+                    .attr("cx",30)
+                    .attr("cy",30)
+                    .attr("r",2);
+                    
+                legend.append("circle")
+                    .style("fill","#418FC6")
+                    .attr("cx",50)
+                    .attr("cy",30)
+                    .attr("r",2);
+                
+                legend.append("line")
+                    .style("stroke","#418FC6")
+                    .style("stroke-width","2px")
+                    .attr("x1",30)
+                    .attr("y1",30)
+                    .attr("x2",50)
+                    .attr("y2",30);
+                
+                legend.append("text")
+                    .text("BMW")
+                    .style("font-size","12px")
+                    .attr("x",55)
+                    .attr("y",34);
+                    
+                legend.append("circle")
+                    .style("fill","#E3314C")
+                    .attr("cx",30)
+                    .attr("cy",45)
+                    .attr("r",2);
+                    
+                legend.append("circle")
+                    .style("fill","#E3314C")
+                    .attr("cx",50)
+                    .attr("cy",45)
+                    .attr("r",2);
+                
+                legend.append("line")
+                    .style("stroke","#E3314C")
+                    .style("stroke-width","2px")
+                    .attr("x1",30)
+                    .attr("y1",45)
+                    .attr("x2",50)
+                    .attr("y2",45);
+                
+                legend.append("text")
+                    .text("Audi")
+                    .style("font-size","12px")
+                    .attr("x",55)
+                    .attr("y",49);
+            }
+
+		</script>
+
+</html>
