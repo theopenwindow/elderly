@@ -60,7 +60,7 @@
                     }else if(d.insurance == "New cooperative medical insurance"){
                         return "#32B294";
                     }else if(d.insurance == "Private medical insurance"){
-                        return "#02435C";
+                        return "#3498DB";
                     }else{
                         return "#5E0042";
                     }
@@ -70,7 +70,9 @@
                     return d.abb ;
                 });             
 
-
+        d3.selectAll("#default").on("click", function(d){
+            d3.selectAll(".ins").style("opacity", 1);
+        });
         d3.selectAll("#gov").on("click", function(d){
             d3.selectAll(".ins").style("opacity", 0.3);
             d3.selectAll("#Government").style("opacity", 1);
