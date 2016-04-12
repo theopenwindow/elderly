@@ -18,17 +18,17 @@
  		 			{scheme: "Living Alone", percent: 88.4}
  		 		];
 
- 		var fullwidth = 700,
- 			fullheight = 200,
- 			margin=50;
+ 		var fullwidth_bar = 700,
+ 			fullheight_bar = 200,
+ 			margin_bar=50;
 
  		 var width = 600;
  		 var height = 70;
 
     	var svg = d3.select("#chart3")
       				.append("svg")
-      				.attr("width", fullwidth)
- 		 			.attr("height", fullheight);
+      				.attr("width", fullwidth_bar)
+ 		 			.attr("height", fullheight_bar);
 
 
 //Common Scheme Label:
@@ -60,7 +60,7 @@
 
  		 svg.append("g")
  		 	   .attr("class", "axis_left")
- 		 	   .attr("transform", "translate("+margin+" ,20)")
+ 		 	   .attr("transform", "translate("+margin_bar+" ,20)")
  		 	   .call(xAxis_left);
 
 //Chart2:    
@@ -93,12 +93,9 @@
 
 //default:
 
- 		d3.select("#insurance").classed("selected", true);
-		d3.select("#insurance")
-			.on("click", function(){
-				d3.select("#insurance_part").style("display", "inline");
-			});
-		d3.select("#chart3").style("display", "none");
+ 		d3.select("#poverty").classed("selected", true);
+		redraw(poverty);
+	 	redraw_left(poverty_urban);
 
 //set buttons:
  		 d3.select(".btn#poverty")
@@ -106,9 +103,8 @@
 	 		 	redraw(poverty);
 	 		 	redraw_left(poverty_urban);
 	 		 	d3.selectAll(".btn").classed("selected", false);
-	 		 	d3.select(".btn#poverty").classed("selected", true)
+	 		 	d3.select(".btn#poverty").classed("selected", true);
 	 		 	d3.select("div#chart3").style("display", "block");
-	 		 	d3.select("div#insurance_part").style("display", "none");
  		 	});
 
  		 d3.select(".btn#living")
@@ -116,19 +112,8 @@
 	 		 	redraw(living);
 	 		 	redraw_left(living_urban);
 	 		 	d3.selectAll(".btn").classed("selected", false);
-	 		 	d3.select(".btn#living").classed("selected", true)
+	 		 	d3.select(".btn#living").classed("selected", true);
 	 		 	d3.select("div#chart3").style("display", "block");
-	 		 	d3.select("div#insurance_part").style("display", "none");
- 		 	});
-
- 		 d3.select(".btn#insurance")
- 		 	.on("click", function(d,i){	 	
-	 		 	redraw(living);
-	 		 	redraw_left(living_urban);
-	 		 	d3.selectAll(".btn").classed("selected", false);
-	 		 	d3.select(".btn#insurance").classed("selected", true)
-	 		 	d3.select("div#insurance_part").style("display", "inline");
-	 		 	d3.select("div#chart3").style("display", "none");
  		 	});
 
 
@@ -147,7 +132,7 @@
  		 	bars.enter()
  		 		.append("rect")
  		 		.attr("class", "bar")
- 		 		.attr("fill", "#177DBC");
+ 		 		.attr("fill", "#ea6948");
 
  		 	bars.exit()
  		 		.transition()
@@ -164,7 +149,7 @@
  		 		})
  		 		.attr("height", yScale.rangeBand())
  		 		.attr("transform", function(d,i){
- 		 			return "translate("+[(xScale_left(d.percent) + margin), (yScale(i)+10)] +")"
+ 		 			return "translate("+[(xScale_left(d.percent) + margin_bar), (yScale(i)+10)] +")"
  		 		});
 
  		 	svg.select(".axis_left").transition().duration(1000).call(xAxis_left);
@@ -220,7 +205,19 @@
 				  .attr("font-family", "Abe")
 				  .attr("font-weight", "bold")
 				  .attr("font-size", "10px")
-				  .attr("fill", "black");
+				  .attr("fill", "black");	
+
+//set rural label:
+ 		 	var labels_rural = svg.append("g").selectAll("text").data(data);
+
+ 		 	labels_rural.enter()
+ 		 				.append("text")
+ 		 				.text("Rural Hukou")
+				  	 	.attr("transform", "translate("+[(width/4), (height * 1.2)] +")")
+				  	 	.attr("font-family", "Abe")
+				  		.attr("font-weight", "bold")
+				  		.attr("font-size", "12px")
+				  		.attr("fill", "#ea6948");	 			  
 
  		 };
 
@@ -236,7 +233,7 @@
  		 	bars.enter()
  		 		.append("rect")
  		 		.attr("class", "bar")
- 		 		.attr("fill", "#AB0000");
+ 		 		.attr("fill", "#005f91");
 
  		 	bars.exit()
  		 		.transition()
@@ -285,4 +282,18 @@
 				  .attr("font-size", "10px")
 				  .attr("fill", "black");
 
+//set urban label:
+ 		 	var labels_rural = svg.append("g").selectAll("text").data(data);
+
+ 		 	labels_rural.enter()
+ 		 				.append("text")
+ 		 				.text("Urban Hukou")
+				  	 	.attr("transform", "translate("+[(width*3/4), (height * 1.2)] +")")
+				  	 	.attr("font-family", "Abe")
+				  		.attr("font-weight", "bold")
+				  		.attr("font-size", "12px")
+				  		.attr("fill", "#005f91");	
  		 };
+
+
+

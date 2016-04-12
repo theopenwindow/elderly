@@ -1,0 +1,288 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Adding Labels</title>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+		<style type="text/css">
+
+			body {
+				background-color: #B9E0ED;
+				font-family: sans-serif;
+				margin: 50px 100px 50px 100px;
+			}
+
+			h2 {
+				margin-left: 200px;
+			}
+
+			p {
+				margin-left: 200px;
+				font-size: 11pt;
+				color: gray;
+			}
+
+			div.y2015 {
+				color: #6699FF;
+				display: inline;
+			}
+			div.y2006 {
+				color: orange;
+				display: inline;
+			}
+
+
+			svg {
+				background-color: white;
+			}
+
+			circle {
+				stroke-width: 1;
+			}
+
+			circle.y2015 {
+				fill: #6699FF;
+			}
+
+			circle.y2006 {
+				fill: orange;
+			}
+
+			circle:hover {
+				stroke-width: 3;
+				stroke: white;
+			}
+
+			line.grid {
+				stroke: #eee;
+			}
+
+			line.between {
+				stroke: black;
+			}
+
+			.axis path,
+			.axis line {
+				fill: none;
+				stroke: black;
+				shape-rendering: crispEdges;
+			}
+
+			.axis text {
+				font-family: sans-serif;
+				font-size: 11px;
+			}
+
+			.xlabel {
+				font-famile: sans-serif;
+				font-size: 11px;
+				color: gray;
+			}
+
+		</style>
+	</head>
+	<body>
+        <h2>Mortality rate, under 5(per 1,000 births) <div class="y2006">2006</div> versus <div class="y2015">2015</div></h2>
+		<p>Source: World Bank</p>
+		<div id ="dot_plot"></div>
+
+	</body>
+	<script type="text/javascript">
+
+		// this is the size of the svg container -- the white part
+			var fullwidth = 1000,
+				fullheight = 3000;
+
+			// these are the margins around the graph. Axes labels go in margins.
+			var margin = {top: 20, right: 25, bottom: 20, left: 150};
+
+			var width = fullwidth - margin.left - margin.right,
+    		height = fullheight - margin.top - margin.bottom;
+
+			var widthScale = d3.scale.linear()
+								.range([ 0, width]);
+
+			var heightScale = d3.scale.ordinal()
+								.rangeRoundBands([ margin.top, height], 0.2);
+
+			var xAxis = d3.svg.axis()
+							.scale(widthScale)
+							.orient("bottom");
+
+			var yAxis = d3.svg.axis()
+							.scale(heightScale)
+							.orient("left")
+							.innerTickSize([0]);
+
+			var svg = d3.select("body")
+						.append("svg")
+						.attr("width", fullwidth)
+						.attr("height", fullheight);
+
+
+			d3.csv("Mortality_under5_10years.csv", function(error, data) {
+
+				if (error) {
+					console.log("error reading file");
+				}
+
+				data.sort(function(a, b) {
+					return d3.descending(+a.year2015, +b.year2015);
+				});
+
+				// in this case, i know it's out of 100 because it's percents.
+				widthScale.domain(
+					d3.extent(data, function(d){
+					return + d.year2006
+				}));
+
+				// js map: will make a new array out of all the d.Country fields
+				heightScale.domain(
+					data.map(function(d) { return d.Country; } ));
+
+
+				// Make the faint lines from y labels to highest dot
+
+				var linesGrid = svg.selectAll("lines.grid")
+					.data(data)
+					.enter()
+					.append("line");
+
+				linesGrid.attr("class", "grid")
+					.attr("x1", margin.left)
+					.attr("y1", function(d) {
+						return heightScale(d.Country) + heightScale.rangeBand()/2;
+					})
+					.attr("x2", function(d) {
+						return margin.left + widthScale(+d.year2015);
+
+					})
+					.attr("y2", function(d) {
+						return heightScale(d.Country) + heightScale.rangeBand()/2;
+					});
+
+				// Make the dotted lines between the dots
+
+				var linesBetween = svg.selectAll("lines.between")
+					.data(data)
+					.enter()
+					.append("line");
+
+				linesBetween.attr("class", "between")
+					.attr("x1", function(d) {
+						return margin.left + widthScale(+d.year2006);
+					})
+					.attr("y1", function(d) {
+						return heightScale(d.Country) + heightScale.rangeBand()/2;
+					})
+					.attr("x2", function(d) {
+						return margin.left + widthScale(d.year2015);
+					})
+					.attr("y2", function(d) {
+						return heightScale(d.Country) + heightScale.rangeBand()/2;
+					})
+					.attr("stroke-dasharray", "5,5")
+					.attr("stroke-width", function(d, i) {
+						if (i == 7) {
+							return "1";
+						} else {
+							return "0.5";
+						}
+					});
+
+
+				// Make the dots for 2006
+
+				var dots2006 = svg.selectAll("circle.y2006")
+						.data(data)
+						.enter()
+						.append("circle");
+
+				dots2006
+					.attr("class", "y2006")
+					.attr("cx", function(d) {
+						return margin.left + widthScale(+d.year2006);
+					})
+					.attr("r", heightScale.rangeBand()/2)
+					.attr("cy", function(d) {
+						return heightScale(d.Country) + heightScale.rangeBand()/2;
+					})
+					.style("stroke", function(d){
+						if (d.Country === "World") {
+							return "black";
+						}
+					})
+					.style("fill", function(d){
+						if (d.Country === "World") {
+							return "darkorange";
+						}
+					})
+					.append("title")
+					.text(function(d) {
+						return d.Country + " in 2006: " + d.year2006 + "‰";
+					});
+
+				// Make the dots for 2015
+
+				var dots2015 = svg.selectAll("circle.y2015")
+						.data(data)
+						.enter()
+						.append("circle");
+
+				dots2015
+					.attr("class", "y2015")
+					.attr("cx", function(d) {
+						return margin.left + widthScale(+d.year2015);
+					})
+					.attr("r", heightScale.rangeBand()/2)
+					.attr("cy", function(d) {
+						return heightScale(d.Country) + heightScale.rangeBand()/2;
+					})
+					.style("stroke", function(d){
+						if (d.Country === "World") {
+							return "black";
+						}
+					})
+					.style("fill", function(d){
+						if (d.Country === "World") {
+							return "#476BB2";
+						}
+					})
+					.append("title")
+					.text(function(d) {
+						return d.Country + " in 2015: " + d.year2015 + "‰";
+					});
+
+					// add the axes
+
+				svg.append("g")
+					.attr("class", "x axis")
+					.attr("transform", "translate(" + margin.left + "," + height + ")")
+					.call(xAxis);
+
+				svg.append("g")
+					.attr("class", "y axis")
+					.attr("transform", "translate(" + margin.left + ",0)")
+					.call(yAxis);
+
+				svg.append("text")
+					.attr("class", "xlabel")
+        	.attr("transform", "translate(" + (margin.left + width / 2) + " ," +
+        				(height + margin.bottom) + ")")
+        	.style("text-anchor", "middle")
+        	.attr("dy", "12")
+        	.text("Mortality, under5");
+
+       	// Style one of the Y labels bold:
+
+        // a hack that works if you can unravel the selections - to style "The World" bold in the axis label, which is the 8th element:
+        var allYAxisLabels = d3.selectAll("g.y.axis g.tick text")[0]; // un-nest array
+        d3.select(allYAxisLabels[7]).style("font-weight", "bold");
+        	// You could also use tick formatting to get a % sign on each axis tick
+
+			});
+
+		</script>
+</html>

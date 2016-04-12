@@ -20,30 +20,36 @@
                 .enter()
                 .append("rect")
                 .attr("transform", function(d,i){
-                    if(i<80){
+                    if(i<67){
                         return "translate(" +i*10+ ",0)";
-                    }else if(i<160){
-                        return "translate(" +(i-80)*10+ ",10)";
-                    }else if(i<240){
-                        return "translate(" +(i-160)*10+ ",20)";
-                    }else if(i<320){
-                        return "translate(" +(i-240)*10+ ",30)";
-                    }else if(i<400){
-                        return "translate(" +(i-320)*10+ ",40)";
-                    }else if(i<480){
-                        return "translate(" +(i-400)*10+ ",50)";
-                    }else if(i<560){
-                        return "translate(" +(i-480)*10+ ",60)";
-                    }else if(i<640){
-                        return "translate(" +(i-560)*10+ ",70)";
-                    }else if(i<720){
-                        return "translate(" +(i-640)*10+ ",80)";
-                    }else if(i<800){
-                        return "translate(" +(i-720)*10+ ",90)";
-                    }else if(i<880){
-                        return "translate(" +(i-800)*10+ ",100)";
-                    }else if(i<949){
-                        return "translate(" +(i-880)*10+ ",110)";
+                    }else if(i<134){
+                        return "translate(" +(i-67)*10+ ",10)";
+                    }else if(i<201){
+                        return "translate(" +(i-134)*10+ ",20)";
+                    }else if(i<268){
+                        return "translate(" +(i-201)*10+ ",30)";
+                    }else if(i<335){
+                        return "translate(" +(i-268)*10+ ",40)";
+                    }else if(i<402){
+                        return "translate(" +(i-335)*10+ ",50)";
+                    }else if(i<469){
+                        return "translate(" +(i-402)*10+ ",60)";
+                    }else if(i<536){
+                        return "translate(" +(i-469)*10+ ",70)";
+                    }else if(i<603){
+                        return "translate(" +(i-536)*10+ ",80)";
+                    }else if(i<670){
+                        return "translate(" +(i-603)*10+ ",90)";
+                    }else if(i<737){
+                        return "translate(" +(i-670)*10+ ",100)";
+                    }else if(i<804){
+                        return "translate(" +(i-737)*10+ ",110)";
+                    }else if(i<871){
+                        return "translate(" +(i-804)*10+ ",120)";
+                    }else if(i<938){
+                        return "translate(" +(i-871)*10+ ",130)";
+                    }else if(i<1000){
+                        return "translate(" +(i-938)*10+ ",140)";
                     }
 
                 })

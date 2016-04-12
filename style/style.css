@@ -9,12 +9,15 @@
 }
 
 .row{
-	height:20%;
+	height:15%;
+    padding-left: 20%; 
+    padding-right: 20%; 
+    padding-top: 0%;  
+    padding-bottom: 10%; 
 }
 
 [class*="col-"] {
     float: left;
-    padding: 4%;
 }
 
 /* For desktop: */
@@ -39,9 +42,9 @@
 }
 
 .container {
-	background-color: lightblue;
-	margin:5%;
-	height:3000px;
+/*	background-color: lightblue;
+*/	margin:5%;
+	height:2500px;
 }
 
 h1 {
@@ -52,13 +55,22 @@ h1 {
 	font-family: 'Slabo 27px', serif;
 }
 
+h3 {
+    text-align: center;
+    margin:1%;
+    padding-top: 5%;
+    padding-bottom: 5%;
+    font-size: 50%;
+}
+
+
 .img {
 	width:80%;
 	margin-left: 10%;
 }
 
 #chart1 {
-	height:80%;
+	margin-top: 1%;
 }
 
 #chart1_intro {
@@ -123,11 +135,10 @@ p{
 
 h2 {
 	margin:1%;
-	padding-top: 2%;
-	padding-bottom: 2%;
+    padding:0;
 }
 
-/*chart.js*/
+/*chart1.js*/
     #lineChart{
         margin: auto;
         width: 700px;
@@ -144,7 +155,7 @@ h2 {
     }
     .axis line {
         fill: none;
-        stroke: #999;
+        stroke: none;
         shape-rendering: crispEdges;
     }
     
@@ -189,12 +200,14 @@ h2 {
     }
     g.line.focused{
         opacity: 1;
+        cursor: pointer;
     }
     g.line.unfocused path.line{
         stroke-width: 1px;
     }
     g.line.focused path.line{
         stroke-width: 3px;
+        cursor: pointer;
     }
     g.line text.label{
         font-family: 'Roboto', sans-serif;
@@ -229,7 +242,7 @@ h2 {
 /*table*/
     table {
         cursor: pointer;
-        width: 800px;}
+        width: 666px;}
     th, td {
         padding: 2px 0px 2px 10px;
         border-spacing: 0px;
@@ -248,19 +261,19 @@ h2 {
 
 /*chart 2*/
     #chart2 {
-        margin-top: 1%;
+        margin-top: 2%;
     }
 /*chart 3*/
 
     #chart3 {
-        height:100%;
-        margin-top: 5%;
+        height:30%;
+        margin-top: 10%;
         }
 
      g .axis line,
      g .axis_left line{
         fill: none;
-        stroke: white;
+        stroke: #999;
         stroke-width: 0.5px;
         shape-rendering: crispEdges;
     }
@@ -269,4 +282,68 @@ h2 {
     .axis_left text {
         font-family: 'Abel', sans-serif;
         font-size: 12px;
+    }
+
+
+/*chart 4*/
+
+    h2 {
+        font-family: 'Slabo 27px', serif;
+        font-size: 20px;
+    }
+
+    #chart4 {
+        height:10%;
+        margin-top: 5%;
+        }
+    div.urban {
+        color: #005f91;
+        display: inline;
+    }
+    div.rural {
+        color: #ea6948;
+        display: inline;
+    }
+
+    circle {
+        stroke-width: 1;
+    }
+
+    circle.urban {
+        fill: #005f91;
+    }
+
+    circle.rural {
+        fill: #ea6948;
+    }
+
+    circle:hover {
+        opacity:0.8;
+        cursor: pointer;
+    }
+
+    line.grid {
+        stroke: lightgrey;
+    }
+
+    line.between {
+        stroke: black;
+    }
+
+    .axisDots path,
+    .axisDots line {
+        fill: none;
+        stroke: black;
+        shape-rendering: crispEdges;
+    }
+
+    .axisDots text {
+        font-family: 'Abel', sans-serif;
+        font-size: 12px;
+    }
+
+    .xlabel {
+        font-famile: 'Abel', sans-serif;
+        font-size: 12px;
+        color: gray;
     }
