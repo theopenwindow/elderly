@@ -82,12 +82,12 @@ h3 {
 
 .btn {
 	float:left;
-	margin-right: 2%;
+	margin-right: 1%;
   background: #fafafa;
 
-  -webkit-border-radius: 7;
-  -moz-border-radius: 7;
-  border-radius: 7px;
+  -webkit-border-radius: 2;
+  -moz-border-radius: 2;
+  border-radius: 2px;
   font-family: Arial;
   color: #000000;
   font-size: 13px;
