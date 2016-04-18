@@ -55,7 +55,6 @@
 	    if (error) {
 	        console.log("Had an error loading file.");
 	    }
-console.log(data);
 	    var ages = d3.keys(data[0]).slice(0,8);
 	    var schemes = d3.keys()
 	// console.log(ages);
@@ -94,7 +93,7 @@ console.log(data);
 	            return d.scheme == myScheme;
 	        });
 	    };
-	    var curData = d3.merge([getVal("Total"), getVal("Total"), getVal("Total"), getVal("Total")]); 
+	    var curData = d3.merge([getVal("Total"), getVal("Total"), getVal("Total"), getVal("Total"), getVal("Total")]); 
 	    yScaleLine.domain([d3.max(curData, function(d){
 	        return d3.max(d.rates, function(d){
 	// console.log(d.amount);
@@ -174,6 +173,11 @@ console.log(data);
 	                return d.scheme;
 	        })
 	        .attr("class", "label")
+	        .attr("id", function(d){
+	        	if(d.scheme = "Total"){
+	        		return "t"
+	        	}
+	        })
 	        .style("text-anchor","start")
 	        .attr("dx",8)
 	        .attr("dy",0);
@@ -195,7 +199,7 @@ console.log(data);
 	 		 	d3.select("#p2").style("display", "none");
 	 		 	d3.select("#p3").style("display", "none");
 	 		 	d3.select("#p4").style("display", "none");		        	
-	            var newData = d3.merge([getVal("Total"), getVal("Total"),getVal("Total"),getVal("Total")]);
+	            var newData = d3.merge([getVal("Total"), getVal("Total"), getVal("Total"),getVal("Total"),getVal("Total")]);
 	        }
 				
 
@@ -204,14 +208,16 @@ console.log(data);
 	 		 	d3.select("#p2").style("display", "block");
 	 		 	d3.select("#p3").style("display", "block");
 	 		 	d3.select("#p4").style("display", "none");
-	            var newData = d3.merge([getVal("Rural"),getVal("Rural"),getVal("Urban"),getVal("Urban")]);
+	            var newData = d3.merge([getVal("Total"), getVal("Rural"),getVal("Rural"),getVal("Urban"),getVal("Urban")]);
+	            d3.select("#t").style("display", "none");
 	        }
 	        else if(d3.select(this).attr("id") == "group3"){
 	        	d3.select("#p1").style("display", "none");
 	 		 	d3.select("#p2").style("display", "none");
 	 		 	d3.select("#p3").style("display", "none");
 	 		 	d3.select("#p4").style("display", "block");
-	            var newData = d3.merge([getVal("Rural_Male"),getVal("Rural_Female"),getVal("Urban_Male"),getVal("Urban_Female")]);
+	            var newData = d3.merge([getVal("Total"), getVal("Rural_Male"),getVal("Rural_Female"),getVal("Urban_Male"),getVal("Urban_Female")]);
+	            d3.select("#t").style("display", "none");
 	        }
 
 
