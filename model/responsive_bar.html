@@ -1,0 +1,52 @@
+<html>
+<head>
+	<title>responsive bars</title>
+	<link href="style/style.css" rel="stylesheet" type="text/css">
+	<link href='https://fonts.googleapis.com/css?family=Abel|News+Cycle|Slabo+27px|PT+Serif' rel='stylesheet' type='text/css'>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+</head>
+<body>
+	<div class="btns">
+						<div class="btn" id="poverty">By Poverty Scheme</div>
+						<div class="btn" id="living">By Living Status</div>
+	</div>
+	<div style="display: block">
+
+<!--   <h1>How Many Sanctions? </h1> -->
+  <!-- <div id="map"></div> -->
+  <br><br>
+    <button class="button" id="malebutton">Male</button>
+    <button class="button" id="femalebutton">Female</button>
+    <button class="button" id="resetbutton">Reset</button>
+
+
+
+  <div style="left:20px" class="dropdown">
+    <button class="dropbtn">Select Country with the Most Violations</button>
+    <div class="dropdown-content">
+      <a class="m" id="country_Russia" href="#">Russia</a>
+      <a class="m" id="country_India" href="#">India</a>
+      <a class="m" id="country_Morocco" href="#">Morocco</a>
+      <a class="m" id="country_Sweden" href="#">Sweden</a>
+      <a class="m" id="country_Brazil" href="#">Brazil</a>
+      <a class="m" id="country_Kenya" href="#">Kenya</a>
+    </div>
+  </div>
+  <!-- <button><a href="#" id="femalebutton">Female</a></button><br><br> -->
+<div class="infobox" style="visibility:hidden;">
+  <p><strong class="infobox_country"></strong></p>
+</div>
+
+
+<svg viewBox="0 0 500 50" style="max-width: 500" preserveAspectRatio="xMidYMid meet">
+  <rect width="10" height="10" x="10" y="11"  fill="#1c4b97" />
+  <text x="25" y="20" font-family="sans-serif" font-size="10px" font-family:"Helvetica" fill="black">Less than 10 Years Ban</text>
+  <rect width="10" height="10" x="10" y="26"  fill="#c12726" />
+  <text x="25" y="35" font-family="sans-serif" font-size="10px" font-family:"Helvetica" fill="black">Life Long Ban</text>
+</svg>
+</div>
+	<div id = "chart3"></div>
+
+</body>
+</html>
+<script type="text/javascript" src="js/chart3.js"></script>

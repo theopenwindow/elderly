@@ -16,8 +16,11 @@
 
 			var svgDots = d3.select("#chart4")
 						.append("svg")
-						.attr("width", fullwidth)
-						.attr("height", fullheight);
+						/*.attr("width", fullwidth)
+						.attr("height", fullheight)*/
+						.attr("viewBox", "0 0 " + fullwidth + " " + fullheight)
+          				.style("max-width", fullwidth + "px")
+          				.attr("preserveAspectRatio", "xMidYMid meet");
 
 			var xAxisDots = d3.svg.axis()
 							.scale(widthScale)

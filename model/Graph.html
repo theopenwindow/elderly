@@ -1,0 +1,431 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Language" content="en">
+<script src='https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js'></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/queue-async/1.0.7/queue.min.js"></script>
+<script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+<style>
+
+
+.button {
+  background: #f5f5f5;
+  background-image: -webkit-linear-gradient(top, #f5f5f5, #bfbfbf);
+  background-image: -moz-linear-gradient(top, #f5f5f5, #bfbfbf);
+  background-image: -ms-linear-gradient(top, #f5f5f5, #bfbfbf);
+  background-image: -o-linear-gradient(top, #f5f5f5, #bfbfbf);
+  background-image: linear-gradient(to bottom, #f5f5f5, #bfbfbf);
+  -webkit-border-radius: 11;
+  -moz-border-radius: 11;
+  border-radius: 11px;
+  -webkit-box-shadow: 0px 1px 3px #8a878a;
+  -moz-box-shadow: 0px 1px 3px #8a878a;
+  box-shadow: 0px 1px 3px #8a878a;
+  font-family: Helvetica;
+  color: #000000;
+  font-size: 12px;
+  padding: 4px 10px 4px 10px;
+  border: solid #a8a8a8 0.5px;
+  text-decoration: none;
+}
+
+.button:hover {
+  background: #969696;
+  background-image: -webkit-linear-gradient(top, #969696, #c2c3c4);
+  background-image: -moz-linear-gradient(top, #969696, #c2c3c4);
+  background-image: -ms-linear-gradient(top, #969696, #c2c3c4);
+  background-image: -o-linear-gradient(top, #969696, #c2c3c4);
+  background-image: linear-gradient(to bottom, #969696, #c2c3c4);
+  text-decoration: none;
+}
+
+.button:active {
+  background-color: #d6d8d9;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+
+.infobox {
+  background-color: none;
+  font-family: Helvetica;
+    font-size: 16px;
+    color: #000000;
+    display: block;
+    width: 500px;
+    height: 10px;
+    text-align: left;
+    /*position: absolute;
+    top:80px;
+    left:108px;*/
+    /*padding-left: 20px;
+    padding-top: 1000px;*/
+}
+
+
+/* Tooltip stuff, borrowed from:  http://bl.ocks.org/Caged/6476579 */
+.d3-tip {
+  font-family: Helvetica;
+    font-size: 10px;
+  line-height: 1;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.95);
+  color: #fff;
+  border-radius: 2px;
+}
+
+  /* Creates a small triangle extender for the tooltip */
+.d3-tip:after {
+  box-sizing: border-box;
+  display: inline;
+  font-size: 10px;
+  width: 100%;
+  line-height: 1;
+  color: rgba(0, 0, 0, 0.9);
+  content: "\25BC";
+  position: absolute;
+  text-align: center;
+  float: left;
+}
+
+/* Style northward tooltips differently */
+.d3-tip.n:after {
+  margin: -1px 0 0 0;
+  top: 100%;
+  left: 0;
+}
+
+  .axis path,
+  .axis line {
+      fill: none;
+      stroke: black;
+      shape-rendering: crispEdges;
+  }
+
+  .axis text {
+      font-family: Helvetica;
+      font-size: 12px;
+  }
+
+  .dropbtn {
+ -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0px;
+  -webkit-box-shadow: 0px 1px 3px #8a878a;
+  -moz-box-shadow: 0px 1px 3px #8a878a;
+  box-shadow: 0px 1px 3px #8a878a;
+  font-family: Helvetica;
+  color: #000000;
+  font-size: 12px;
+  background: #e0e2e3;
+  padding: 10px 20px 10px 20px;
+  border: solid #636363 1px;
+  text-decoration: none;
+  
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    font-size: 12px;
+    text-decoration: none;
+    display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {background-color: #f1f1f1}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {
+   background: #bababa;
+  text-decoration: none;
+}
+</style>
+</head>
+<body>
+<center>
+<div style="display: block">
+
+<!--   <h1>How Many Sanctions? </h1> -->
+  <!-- <div id="map"></div> -->
+  <br><br>
+    <button class="button" id="malebutton">Male</button>
+    <button class="button" id="femalebutton">Female</button>
+    <button class="button" id="resetbutton">Reset</button>
+
+
+
+  <div style="left:20px" class="dropdown">
+    <button class="dropbtn">Select Country with the Most Violations</button>
+    <div class="dropdown-content">
+      <a class="m" id="country_Russia" href="#">Russia</a>
+      <a class="m" id="country_India" href="#">India</a>
+      <a class="m" id="country_Morocco" href="#">Morocco</a>
+      <a class="m" id="country_Sweden" href="#">Sweden</a>
+      <a class="m" id="country_Brazil" href="#">Brazil</a>
+      <a class="m" id="country_Kenya" href="#">Kenya</a>
+    </div>
+  </div>
+  <!-- <button><a href="#" id="femalebutton">Female</a></button><br><br> -->
+<div class="infobox" style="visibility:hidden;">
+  <p><strong class="infobox_country"></strong></p>
+</div>
+
+
+<svg viewBox="0 0 500 50" style="max-width: 500" preserveAspectRatio="xMidYMid meet">
+  <rect width="10" height="10" x="10" y="11"  fill="#1c4b97" />
+  <text x="25" y="20" font-family="sans-serif" font-size="10px" font-family:"Helvetica" fill="black">Less than 10 Years Ban</text>
+  <rect width="10" height="10" x="10" y="26"  fill="#c12726" />
+  <text x="25" y="35" font-family="sans-serif" font-size="10px" font-family:"Helvetica" fill="black">Life Long Ban</text>
+</svg>
+</div>
+
+    
+
+  <div id="graph"></div>
+
+  <div class="tooltip"></div>
+  <!-- Thanks for the link here to learn DropDownMenue and for myself later:
+  http://bl.ocks.org/niallmackenzie/8a763afd14e195154e63 -->
+   
+
+
+  <script>
+
+//Graph
+  queue()
+    .defer(d3.csv, "doping.csv", function(d) {
+      var ineligible_years = d['ineligibleyears'];
+      console.log(ineligible_years);
+      var years = d['years'];
+      return d;
+
+    })
+    .await(function(error, data) {
+      console.log(data);
+      
+
+    //Set canvas size for graph
+    // var margin1 = {'left': 100,'right': 50,'top': 5,'bottom': 45};
+    var margin1 = {'left': 0,'right': 50,'top': 0,'bottom': 5};
+
+    var svg_height1 = 400,
+        svg_width1 = 500;
+        //height/width
+
+    var svg1 = d3.select("#graph")
+          .append("svg")
+          .attr("viewBox", "0 0 " + svg_width1 + " " + svg_height1)
+          .style("max-width", svg_width1 + "px")
+          .attr("preserveAspectRatio", "xMidYMid meet");
+          // .attr('height', svg_height1)
+          // .attr('width', svg_width1);
+
+    var height1 = svg_height1 - margin1['top'] - margin1['bottom'],
+        width1 = svg_width1 - margin1['left'] - margin1['right'];
+    
+    // the g element goes inside of the svg1
+    var barchart = svg1.append("g")
+            .attr("transform", "translate(" + margin1['left'] + "," + margin1['top'] + ")");
+    
+
+    var grouped_years = d3.nest().key(function(d) {
+                            return d['years'];
+                          })
+                          .entries(data)
+    console.log(data);
+    console.log("grouped_years");
+    console.log(grouped_years);
+
+    //rectangels
+    var ineligible_years = data['ineligibleyears'];
+    
+    //Rectangles
+      var rectangles = barchart.append('g');
+
+      var containers = rectangles.selectAll('g')
+                    .data(grouped_years)
+                    .enter()
+                    .append('g');
+
+                    // .style('background-color','blue')
+      containers.attr('transform',function(d,i){
+                    // console.log("HAHAHAHAHAWhereAreYou"); 
+                    // console.log(typeof(+d["key"])); 
+                      if ((+d["key"]) < 2010) {
+                        return "translate("+i+10+","+50+")"; }
+                      if ((+d["key"]) < 2015) {
+                        return "translate("+(i%5)+10+","+150+")"; }
+                      else {
+                        return "translate("+(i%5)+10+","+330+")";}
+                      })
+
+                    .attr("class",function(d){ return "year_"+d["key"]; });
+    
+        //rectangles.append("text").text("Hello")
+        containers.append("text").text(function(d) {
+                    return 'Year: '+d["key"];
+                  })
+                  .style('fill','black')
+                  .style('font-size','10')
+                  .style('font-family','sans-serif')
+                  .attr('x','8')
+                  .attr('y','-10');
+
+
+
+    
+      grouped_years.forEach( function(d){
+        console.log("year_"+d["key"]);
+
+      
+      // squares
+        // jiachuan = 0;
+      var tip = d3.tip()
+        .attr('class', 'd3-tip')
+        .offset([-10, 0])
+        .html(function(d) {
+        return '<strong>Name: </strong>'+d['firstname']+' '+d['lastname']+' ('+d['country']+')'+'<br/><hr>'+'<br/>Sanctions: '+d['sanction']+'<br/>Violations: '+d['rule'];
+          });
+                          
+      var squares = d3.select(".year_"+d["key"])
+                              .selectAll('rect')
+                              .data(d["values"])
+                              .enter()
+                              .append('rect')
+                              .attr('class',function(d) {
+                                str = d['sex'];
+                              return "countryrect sex-" + str + " country-"+d['country']+ " countrycode-"+d['countrycode']+" rule-"+d['rule'];
+                              })
+                              .attr('x',function(d, i){ 
+                                //jiachuan++;
+                                //return jiachuan*12;
+                                return (i % 7) * 12;
+                              })
+                              .attr('y',function(d,i){
+                                return parseInt(i / 7) * 12;
+                              })
+                              .attr('width',10)
+                              .attr('height',10)
+                              .attr('fill',function(d) {
+                                // console.log(d);
+                                if( d['ineligibleyears']==100){
+                                  return '#c12726';}
+                                else{
+                                  return '#1c4b97'}
+                              })
+                            .style('visibility','visible')
+                            .call(tip)
+                            .on('mouseover', function(d) {
+                                tip.show(d);
+                                  })
+
+                            .on('mouseout', function(d) {
+                                tip.hide(d);
+                                d3.select(".infobox")
+                                .style('visibility','hidden')
+
+                    d3.select(".infobox").style('visibility', 'visible');
+                        });
+
+                    d3.selectAll("#malebutton")
+                            .on('click', function(d) {
+                            // d3.selectAll(".sex-M").style;
+                            d3.selectAll(".sex-F").style('opacity',0.15)
+                            d3.selectAll(".sex-M").style('opacity',1);
+                    })
+                    d3.selectAll("#femalebutton")
+                            .on('click', function(d) {
+                            // d3.selectAll(".sex-M").style;
+                            d3.selectAll(".sex-M").style('opacity',0.15)
+                            d3.selectAll(".sex-F").style('opacity',1);
+                    })
+                    d3.selectAll("#resetbutton")
+                            .on('click', function(d) {
+                            // d3.selectAll(".sex-M").style;
+                            d3.selectAll(".sex-M").style('opacity',1)
+                            d3.selectAll(".sex-F").style('opacity',1)
+                            d3.select(".infobox").style('visibility', 'hidden');
+                    })
+
+                    d3.selectAll("#country_Russia")
+                            .on('click', function(d) {
+                          // d3.selectAll(".sex-M").style;
+                            d3.select(".infobox_country").text('Country: Russia');
+                            d3.select(".infobox").style('visibility', 'visible');
+                            d3.selectAll('.countryrect').style('opacity', 0.2);
+                            d3.selectAll('.country-Russia').style('opacity', 1);
+                    })
+                    d3.selectAll("#country_India")
+                            .on('click', function(d) {
+                            d3.select(".infobox_country").text('Country: India');
+                            d3.select(".infobox").style('visibility', 'visible');
+                            d3.selectAll('.countryrect').style('opacity', 0.2);
+                            d3.selectAll('.country-India').style('opacity', 1);
+                    })
+                    d3.selectAll("#country_Morocco")
+                            .on('click', function(d) {
+                            d3.select(".infobox_country").text('Country: Morocco');
+                            d3.select(".infobox").style('visibility', 'visible');
+                            d3.selectAll('.countryrect').style('opacity', 0.2);
+                            d3.selectAll('.country-Morocco').style('opacity', 1);
+                    })
+                    d3.selectAll("#country_Sweden")
+                            .on('click', function(d) {
+                            d3.select(".infobox_country").text('Country: Sweden');
+                            d3.select(".infobox").style('visibility', 'visible');
+                            d3.selectAll('.countryrect').style('opacity', 0.2);
+                            d3.selectAll('.country-Sweden').style('opacity', 1);
+                    })
+                    d3.selectAll("#country_Brazil")
+                            .on('click', function(d) {
+                            d3.select(".infobox_country").text('Country: Brazil');
+                            d3.select(".infobox").style('visibility', 'visible');
+                            d3.selectAll('.countryrect').style('opacity', 0.2);
+                            d3.selectAll('.country-Brazil').style('opacity', 1);
+                    })
+                    d3.selectAll("#country_Kenya")
+                            .on('click', function(d) {
+                            d3.select(".infobox_country").text('Country: Kenya');
+                            d3.select(".infobox").style('visibility', 'visible');
+                            d3.selectAll('.countryrect').style('opacity', 0.2);
+                            d3.selectAll('.country-Kenya').style('opacity', 1);
+                    })
+                    
+                  
+               
+                              
+      });
+        
+          
+        
+   
+
+
+    });
+  </script>
+</body>
+</html>

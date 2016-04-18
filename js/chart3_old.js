@@ -27,9 +27,8 @@
 
     	var svg = d3.select("#chart3")
       				.append("svg")
- 		 			.attr("viewBox", "0 0 " + fullwidth_bar + " " + fullheight_bar)
-          			.style("max-width", fullwidth_bar + "px")
-          			.attr("preserveAspectRatio", "xMidYMid meet");
+      				.attr("width", fullwidth_bar)
+ 		 			.attr("height", fullheight_bar);
 
 
 //Common Scheme Label:
@@ -60,7 +59,7 @@
  		 					  	.ticks(4);
 
  		 svg.append("g")
- 		 	   .attr("class", "axisbar_left")
+ 		 	   .attr("class", "axis_left")
  		 	   .attr("transform", "translate("+margin_bar+" ,20)")
  		 	   .call(xAxis_left);
 
@@ -88,7 +87,7 @@
  		 					  .ticks(4);
 
  		svg.append("g")
- 		 	   .attr("class", "axisbar")
+ 		 	   .attr("class", "axis")
  		 	   .attr("transform", "translate(" + (width/2+100) + ",20)")
  		 	   .call(xAxis);
 
@@ -295,26 +294,6 @@
 				  		.attr("font-size", "12px")
 				  		.attr("fill", "#005f91");	
  		 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

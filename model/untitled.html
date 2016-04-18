@@ -1,0 +1,62 @@
+<script type="text/javascript">
+function resize(){
+                    widthLine = parseInt(d3.select("#lineChart").style("width")) - marginLine.left - marginLine.right;
+                    heightLine = parseInt(d3.select("#lineChart").style("width")) - marginLine.top - marginLine.bottom;
+
+                    xScaleLine.rangeRoundBands([0, widthLine],1)
+                    yScaleLine.range([0, heightLine]);
+
+                    xAxisLine.scale(xScaleLine);
+
+                    yAxisLine.scale(yScaleLine)
+                            .tickPadding([-widthLine-7])
+                            .tickSize([widthLine]);
+
+                    /*line.x(function(d){
+                    return xScaleLine(d.age);
+                         })
+                        .y(function(d){
+                    return yScaleLine(d.amount);
+                         });*/
+
+                    svgLine.select(".x.axis")
+                           .attr("transform","translate(0," + heightLine + ")")
+                           .call(xAxisLine);
+
+                    svgLine.select(".y.axis")
+                            .attr("x2",widthLine)
+                            .attr("y2",0)
+                            .call(yAxisLine); 
+
+
+                    svgLine.selectAll(".line")
+                            .attr("d",line);
+
+                    circleLine
+                            .attr("cx",function(d){return xScaleLine(+d.age);})
+                            .attr("cy",function(d){return yScaleLine(+d.amount);}); 
+
+                    textLine
+                                    .attr("x",function(d){return xScaleLine(+d.age);})
+                                    .attr("y",function(d){return yScaleLine(+d.amount);});
+
+                    labelLine
+                            .attr("x", widthLine)
+                            .attr("y", function(d){
+                                return yScaleLine(+d.lastRates);
+                            });
+
+                    newLine
+                        .attr("d",function(d,i){
+                            return line(newData[i].rates);
+                        });
+
+                    newLabel
+                        .attr("y",function(d,i){
+                            var lastRates = newData[i].rates[newData[i].rates.length - 1].amount;
+                            return yScaleLine(+lastRates);
+                        });
+
+                 };    
+</script>
+                
