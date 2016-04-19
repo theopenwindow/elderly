@@ -25,38 +25,38 @@
                 .attr("transform", function(d,i){
                     if(i<60){
                         return "translate(" +i*20+ ",0)";
-                    }else if(i<121){
+                    }else if(i<120){
                         return "translate(" +(i-60)*20+ ",20)";
-                    }else if(i<181){
-                        return "translate(" +(i-121)*20+ ",40)";
-                    }else if(i<241){
-                        return "translate(" +(i-181)*20+ ",60)";
-                    }else if(i<301){
-                        return "translate(" +(i-241)*20+ ",80)";
-                    }else if(i<361){
-                        return "translate(" +(i-301)*20+ ",100)";
-                    }else if(i<421){
-                        return "translate(" +(i-361)*20+ ",120)";
-                    }else if(i<481){
-                        return "translate(" +(i-421)*20+ ",140)";
-                    }else if(i<541){
-                        return "translate(" +(i-481)*20+ ",160)";
-                    }else if(i<601){
-                        return "translate(" +(i-541)*20+ ",180)";
-                    }else if(i<661){
-                        return "translate(" +(i-601)*20+ ",200)";
-                    }else if(i<721){
-                        return "translate(" +(i-661)*20+ ",220)";
-                    }else if(i<781){
-                        return "translate(" +(i-721)*20+ ",240)";
-                    }else if(i<841){
-                        return "translate(" +(i-781)*20+ ",260)";
-                    }else if(i<901){
-                        return "translate(" +(i-841)*20+ ",280)";
-                    }else if(i<961){
-                        return "translate(" +(i-901)*20+ ",300)";
+                    }else if(i<180){
+                        return "translate(" +(i-120)*20+ ",40)";
+                    }else if(i<240){
+                        return "translate(" +(i-180)*20+ ",60)";
+                    }else if(i<300){
+                        return "translate(" +(i-240)*20+ ",80)";
+                    }else if(i<360){
+                        return "translate(" +(i-300)*20+ ",100)";
+                    }else if(i<420){
+                        return "translate(" +(i-360)*20+ ",120)";
+                    }else if(i<480){
+                        return "translate(" +(i-420)*20+ ",140)";
+                    }else if(i<540){
+                        return "translate(" +(i-480)*20+ ",160)";
+                    }else if(i<600){
+                        return "translate(" +(i-540)*20+ ",180)";
+                    }else if(i<660){
+                        return "translate(" +(i-600)*20+ ",200)";
+                    }else if(i<720){
+                        return "translate(" +(i-660)*20+ ",220)";
+                    }else if(i<780){
+                        return "translate(" +(i-720)*20+ ",240)";
+                    }else if(i<840){
+                        return "translate(" +(i-780)*20+ ",260)";
+                    }else if(i<900){
+                        return "translate(" +(i-840)*20+ ",280)";
+                    }else if(i<960){
+                        return "translate(" +(i-900)*20+ ",300)";
                     }else if(i<1000){
-                        return "translate(" +(i-961)*20+ ",320)";
+                        return "translate(" +(i-960)*20+ ",320)";
                     }
 
                 })

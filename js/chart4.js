@@ -1,9 +1,9 @@
 		// this is the size of the svgDots container -- the white part
 			var fullwidth = 600,
-				fullheight = 200;
+				fullheight = 300;
 
 			// these are the margins around the graph. Axes labels go in margins.
-			var margin = {top: 20, right: 25, bottom: 20, left: 200};
+			var margin = {top: 50, right: 25, bottom: 20, left: 200};
 
 			var widthDots = fullwidth - margin.left - margin.right,
     		heightDots = fullheight - margin.top - margin.bottom;
@@ -176,7 +176,7 @@
 				svgDots.append("text")
 					.attr("class", "xlabel")
 		        	.attr("transform", "translate(" + (margin.left + widthDots/2 ) + " ," +
-		        				(heightDots + margin.bottom) + ")")
+		        				(heightDots + margin.bottom*3/2) + ")")
 		        	.style("text-anchor", "middle")
 		        	.attr("dy", "12")
 		        	.text("Elderly Poverty Rate");

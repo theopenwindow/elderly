@@ -3,15 +3,15 @@
 	var fullWidthLine = 1200;
 	var fullHeightLine = 800;
 
-	var marginLine = {top:12, bottom:40, left:60, right:80};
+	var marginLine = 80;
 
-	var widthLine = fullWidthLine - marginLine.left - marginLine.right;
-	var heightLine = fullHeightLine - marginLine.top - marginLine.bottom;
-	/*var widthLine = parseInt(d3.select("#chart1").style("width")) - marginLine.left - marginLine.right;
-	var heightLine = parseInt(d3.select("#chart1").style("width")) - marginLine.top - marginLine.bottom;*/
+	var widthLine = fullWidthLine - marginLine - marginLine;
+	var heightLine = fullHeightLine - marginLine - marginLine;
+	/*var widthLine = parseInt(d3.select("#chart1").style("width")) - marginLine - marginLine;
+	var heightLine = parseInt(d3.select("#chart1").style("width")) - marginLine - marginLine;*/
 
-	xScaleLine = d3.scale.ordinal().rangeRoundBands([0, widthLine],1)
-	yScaleLine = d3.scale.linear().range([0, heightLine]);
+	xScaleLine = d3.scale.ordinal().rangeRoundBands([marginLine, (widthLine+marginLine)],1)
+	yScaleLine = d3.scale.linear().range([marginLine, (heightLine+marginLine)]);
 
 	var svgLine = d3.select("#chart1")
 	    .append("svg")
@@ -19,7 +19,7 @@
 	    /*.attr("width",fullWidthLine)
 	    .attr("height",fullHeightLine)
 	    .append("g")
-	    .attr("transform","translate(" + marginLine.left + "," + marginLine.top + ")")*/
+	    */
 	    .attr("viewBox", "0 0 " + fullWidthLine + " " + fullHeightLine)
 		.style("max-width", fullWidthLine + "px")
 		.attr("preserveAspectRatio", "xMidYMid meet");
@@ -36,7 +36,7 @@
 	var yAxisLine = d3.svg.axis()
 	    .scale(yScaleLine)
 	    .orient("right")
-	    .ticks(4)
+	    .ticks(2)
 	    .tickFormat(function(d) { return d*100 +"%"; })
 	    .tickPadding([-widthLine-7])
 	    .tickSize([widthLine]);
@@ -121,18 +121,27 @@
 	    svgLine.append("g")
 	        .call(xAxisLine)
 	        .attr("class","x axis lineChart")
-	        .attr("transform","translate(0," + heightLine + ")");
+	        .attr("transform","translate(0," + (heightLine+marginLine) + ")");
 	    
 	    svgLine.append("g")
 	        .call(yAxisLine)
 	        .attr("class","y axis lineChart")
 	        .selectAll("text")
-	        .style("text-anchor","end");
+	        .style("text-anchor","end")
+	        .attr("transform", "translate("+(widthLine+marginLine*3/2)+",0)");
+
+	    svgLine.append("text")
+				.attr("class", "axis text")
+	        	.attr("transform", "translate(" + (marginLine + widthLine/2 ) + " ," +
+	        				(heightLine + marginLine*1.7) + ")")
+	        	.style("text-anchor", "middle")
+	        	.attr("dy", "12")
+	        	.text("Age");
 	    
-	    svgLine.select(".y.axis")
+/*	    svgLine.select(".y.axis")
 	        .append("line")
 	        .attr("x2",widthLine)
-	        .attr("y2",0);
+	        .attr("y2",0);*/
 	    
 	   groups.selectAll("circle")
 	        .data(function(d){return d.rates;})
@@ -179,7 +188,7 @@
 	        	}
 	        })
 	        .style("text-anchor","start")
-	        .attr("dx",8)
+	        .attr("dx",20)
 	        .attr("dy",0);
 	    
 	    groups
@@ -239,10 +248,13 @@
 	            })
 	            .attr("stroke", function(d,i,j){
 	                if(newData[i].rates[j].scheme.startsWith("R")){
-	                    console.log("rural line");return "#ea6948";
+	                    return "#ea6948";
 	                }
 	                else if(newData[i].rates[j].scheme.startsWith("U")){
-	                    console.log("rural line");return "#005f91";
+	                    return "#005f91";
+	                }
+	                else if (newData[i].rates[j].scheme.startsWith("T")){
+	                	return "#999999";
 	                }
 	            });
 
@@ -268,6 +280,9 @@
 	                else if(newData[i].rates[j].scheme.startsWith("U")){
 	                    console.log("rural line");return "#005f91";
 	                }
+	                else if (newData[i].rates[j].scheme.startsWith("T")){
+	                	return "#999999";
+	                }
 	            });
 	        
 	       groups.selectAll("circle")
@@ -281,10 +296,12 @@
 	            .attr("fill", function(d){
 	                if(d.scheme.startsWith("R")){
 	                    return "#ea6948";
-	                }
-	                else if(d.scheme.startsWith("U")){
+	                }else if(d.scheme.startsWith("U")){
 	                    return "#005f91";
-	                }})
+	                }else if (d.scheme.startsWith("T")){
+	                	return "#999999";
+	                }
+	            })
 	            .attr("stroke", "none");
 
 	        groups.selectAll("text.dotVal")
@@ -293,7 +310,8 @@
 	            .transition()
 	            .duration(1500)
 	            .attr("y",function(d){return yScaleLine(+d.amount);})
-	            .attr("dy", -15)
+	            .attr("dy", -30)
+	            .attr("dx", 5)
 	            .attr("stroke", function(d){
 	                if(d.scheme.startsWith("R")){
 	                    return "#ea6948";
@@ -328,8 +346,8 @@
 
 /*	d3.select(window).on("resize", resize);
 	function resize(){
-		widthLine = parseInt(d3.select("#chart1").style("width")) - marginLine.left - marginLine.right;
-		heightLine = parseInt(d3.select("#chart1").style("width")) - marginLine.top - marginLine.bottom;
+		widthLine = parseInt(d3.select("#chart1").style("width")) - marginLine - marginLine;
+		heightLine = parseInt(d3.select("#chart1").style("width")) - marginLine - marginLine;
 
 		xScaleLine.rangeRoundBands([0, widthLine],1)
 		yScaleLine.range([0, heightLine]);

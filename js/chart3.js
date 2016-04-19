@@ -18,8 +18,8 @@
  		 			{scheme: "Living Alone", percent: 88.4}
  		 		];
 
- 		var fullwidth_bar = 700,
- 			fullheight_bar = 200,
+ 		var fullwidth_bar = 800,
+ 			fullheight_bar = 400,
  			margin_bar=50;
 
  		 var width = 600;
@@ -177,9 +177,9 @@
 				  .text(function(d){
 					  	return d.percent;
 					  })
-				  .attr("font-family", "Abe")
+				  .attr("font-family", "Abel")
 				  .attr("font-weight", "bold")
-				  .attr("font-size", "12px")
+				  .attr("font-size", "14px")
 				  .attr("fill", "black");
 
 //set common scheme label:
@@ -203,9 +203,9 @@
 				  .text(function(d){
 					  	return d.scheme;
 					  })
-				  .attr("font-family", "Abe")
+				  .attr("font-family", "Abel")
 				  .attr("font-weight", "bold")
-				  .attr("font-size", "10px")
+				  .attr("font-size", "14px")
 				  .attr("fill", "black");	
 
 //set rural label:
@@ -215,9 +215,9 @@
  		 				.append("text")
  		 				.text("Rural Hukou")
 				  	 	.attr("transform", "translate("+[(width/4), (height * 1.2)] +")")
-				  	 	.attr("font-family", "Abe")
+				  	 	.attr("font-family", "Abel")
 				  		.attr("font-weight", "bold")
-				  		.attr("font-size", "12px")
+				  		.attr("font-size", "14px")
 				  		.attr("fill", "#ea6948");	 			  
 
  		 };
@@ -278,9 +278,9 @@
 				  .text(function(d){
 					  	return d.percent;
 					  })
-				  .attr("font-family", "Abe")
+				  .attr("font-family", "Abel")
 				  .attr("font-weight", "bold")
-				  .attr("font-size", "10px")
+				  .attr("font-size", "14px")
 				  .attr("fill", "black");
 
 //set urban label:
@@ -290,9 +290,9 @@
  		 				.append("text")
  		 				.text("Urban Hukou")
 				  	 	.attr("transform", "translate("+[(width*3/4), (height * 1.2)] +")")
-				  	 	.attr("font-family", "Abe")
+				  	 	.attr("font-family", "Abel")
 				  		.attr("font-weight", "bold")
-				  		.attr("font-size", "12px")
+				  		.attr("font-size", "14px")
 				  		.attr("fill", "#005f91");	
  		 };
 

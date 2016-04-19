@@ -143,12 +143,16 @@ h2 {
     padding:0;
 }
 
+h4 {
+    font-family: "Slabo 27px", serif;
+}
+
 /*chart1.js*/
 
 
     #chart1 {
         width: 100%;
-        height: 150%;
+        height: 160%;
     }
 
     #chart1_intro {
@@ -159,9 +163,9 @@ h2 {
     }
 
     .axis text{
-        font-family: 'Roboto', sans-serif;
+        font-family: 'Abel', sans-serif;
         fill: #444;
-        font-size: 20px;
+        font-size: 25px;
     }
     .y.axis path{
         fill: none;
@@ -187,7 +191,7 @@ h2 {
     }
     path.line{
         fill: none;
-        stroke-width: 1.5px;
+        stroke-width: 4px;
         transition: 0.1s;
     }
 /*        g.urban path.line{
@@ -240,18 +244,24 @@ h2 {
         display: none;
     }
     text.dotVal{
-        font-family: 'Open Sans', sans-serif;
-        font-size: 24px;
+        font-family: 'Abel', sans-serif;
+        font-size: 25px;
     }
     .lineChart text{
         text-anchor: end;
+        fill: black;
+        font-family: 'Abel', sans-serif;
+        font-size: 25px;
+        font-weight: bold;        
     }
+
     .lineChart .y .tick line{
         stroke-dasharray: 2,5;
+        /*stroke: #999;*/
     }
     .lineChart .x.axis path{
         fill: none;
-        stroke: #999;
+        stroke: black;
     }
 
 /*table*/
@@ -282,10 +292,17 @@ h2 {
     .ins {
         cursor: pointer;
     }
+
+    .ps {
+        margin-top: 0;
+        font-size: 13px;
+        text-align: right;
+    }
 /*chart 3*/
 
     #chart3 {
-        height:30%;
+        width: 100%;
+        height:50%;
         margin-top: 10%;
         }
 
@@ -300,7 +317,7 @@ h2 {
     .axisbar text,
     .axisbar_left text {
         font-family: 'Abel', sans-serif;
-        font-size: 12px;
+        font-size: 15px;
     }
 
 
@@ -358,11 +375,11 @@ h2 {
 
     .axisDots text {
         font-family: 'Abel', sans-serif;
-        font-size: 12px;
+        font-size: 14px;
     }
 
     .xlabel {
         font-family: 'Abel', sans-serif;
-        font-size: 12px;
+        font-size: 14px;
         color: gray;
     }
