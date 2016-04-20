@@ -18,8 +18,8 @@
  		 			{scheme: "Living Alone", percent: 88.4}
  		 		];
 
- 		var fullwidth_bar = 800,
- 			fullheight_bar = 400,
+ 		var fullwidth_bar = 700,
+ 			fullheight_bar = 100,
  			margin_bar=50;
 
  		 var width = 600;

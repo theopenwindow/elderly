@@ -34,12 +34,17 @@
 						<p>The difference can be easily seen from the employment rate with age changing. The share of population that works not surprisingly declines with age, but <b><i>the sharpest decline occurs in the 50s and early 60s for those with urban hukou and not until after age 65 for those with rural hukou. </i></b></p>
 					</div>
 					<h4>Employment Rate Changes With Age</h4>
-					<div class="btns">
+				<!--	<div class="btns">
 						<button class="btn" id="group1">Total</button>
 						<button class="btn" id="group2">Hukou</button>
 						<button class="btn" id="group3">Gender</button>
 					</div>
-					<div id="chart1"></div>	
+ 					<div id="chart1"></div>	 -->
+<div style="max-width: 800px;">
+<div style="position: relative; height: 0; overflow: hidden; padding-bottom: 80%;">
+<iframe frameborder="0" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="responsive_line.html"></iframe>
+</div>
+</div>					
 					<div class="col-12">
 					<div class="chart_text">
 						<p>For those with <b><i>urban hukou</i></b>, the employment share declines from nearly 80% at age 45-49, to about 40% at age 55-59 and 20% at age 60-64. In sharp contrast, for those with <b><i>rural hukou</i></b>, the most people work even at age 65-69, with rates not declining to below 20% until after age 80. These large disparities suggest that there are significantly different institutions affecting retirement for urban and rural citizens. With respect to retirement behavior, urban China looks like many European countries, while rural China looks like many developing countries.</p>
@@ -55,62 +60,76 @@
 				<div class="col-12">
 											<br><br><br>
 
-					<p>The pension benefits of new programs are very modest, while those provided by government or firms are very generous. The table bellows reveals the great disparity in benefit levels across programs as well as the share of the population participating in different pension programs. The pension insurance of median annual pension benefits of the new rural pension program residents is just 720 to 1,200 yuan, while those from government or public agencies (24,000 yuan) and firm pensions (18,000) are much greater. The median share of expenditures financed by pensions is 20% or less for the new programs while it is 244% and 192% for the government/public agency and firm basic pensions. </p>
-					<p>From the all the elderly who receive any pension benefits, 21.6% receive benefits from one of the two main public pension programs for urban workers, 10.7% from the firm basic pension program and 10.9% from the government or public agency worker pensions program. Thus, just as for medical insurance programs, pension programs provide very different benefit levels and thus remain highly segmented. So it is difficult to integrate programs or pool program finances in a way that will facilitate labor mobility. </p>
-					<p>(Click the table below)</p>
+					<p><b><i>The pension benefits of new programs are very modest, while those provided by government or firms are very generous.</i></b> The table bellow reveals the great disparity in benefit levels across programs as well as the share of the population participating in different pension programs. The pension insurance of median annual pension benefits of the new rural pension program residents is just 111 to 186 dollars, while those from government or public agencies (3,713 dollars) and firm pensions (2,785 dollars) are much greater. The median share of expenditures financed by pensions is 20% or less for the new programs while it is 244% and 192% for the government/public agency and firm basic pensions. </p>
+					
+					<p>Click the table below:</p>
 					<div>
 						<div>					    
 							<table>
 								<tr id="default">
-									<th>Health Insurance Scheme</th>
-									<th>Population(%)</th>
-									<th class="money">Median Premium<br>(yuan)</th>
-									<th class="money">Median Premium<br>(dollars)</th>
+									<th>Pension Subsidy to the Oldest Old<br>(RESET)</th>
+									<th>Population<br>(%)</th>
+									<th class="money">Median Annual Pension Benefit<br>(Dollar)</th>
+									<th class="money">Median Share of Expenditure<br>(%)</th>
 								</tr>
-								<tr  class="table" id="gov">
-									<td>Government medical insurance</td>
-									<td>3.9</td>
-									<td class="money">0</td>
-									<td class="money">0</td>
+								<tr  class="table" id="the_oldest">
+									<td>Pension Subsidy to the Oldest Old</td>
+									<td>3.6</td>
+									<td class="money">111</td>
+									<td class="money">19.1</td>
 								</tr>
-								<tr class="table" id="emp">
-									<td>Urban employee medical insurance</td>
-									<td>16.3</td>
-									<td class="money">0</td>
-									<td class="money">0</td>
+								<tr class="table" id="new_rural">
+									<td>New Rural Social Pension Insurance</td>
+									<td>18.2</td>
+									<td class="money">111</td>
+									<td class="money">21</td>
 								</tr>
-								<tr class="table" id="res">
-									<td>Urban resident medical insurance</td>
-									<td>6.3</td>
-									<td class="money">120</td>
-									<td class="money">18.5</td>
+								<tr class="table" id="urban_other">
+									<td>Urban and Other Residents' Pension</td>
+									<td>14.4</td>
+									<td class="money">186</td>
+									<td class="money">38.7</td>
 								</tr>
-								<tr class="table" id="cop">
-									<td>New cooperative medical insurance</td>
-									<td>65.9</td>
-									<td class="money">30</td>
-									<td class="money">4.6</td>
+								<tr class="table" id="firm_basic">
+									<td>Firm Basic Pension</td>
+									<td>10.7</td>
+									<td class="money">2,785</td>
+									<td class="money">192.9</td>
 								</tr>
-								<tr class="table" id="prv">
-									<td>Private medical insurance</td>
-									<td>1.3</td>
-									<td class="money">138</td>
-									<td class="money">21.3</td>
+								<tr class="table" id="firm_sup">
+									<td>Firm Supplemental Pension</td>
+									<td>1.2</td>
+									<td class="money">2,042</td>
+									<td class="money">169.7</td>
 								</tr>
-								<tr class="table" id="oth">
-									<td>Other medical insurance</td>
-									<td>0.9</td>
-									<td class="money">120</td>
-									<td class="money">18.5</td>
+								<tr class="table" id="government">
+									<td>Government or Institutions' Pension</td>
+									<td>10.9</td>
+									<td class="money">3,713</td>
+									<td class="money">242.2</td>
+								</tr>
+								<tr class="table" id="com_pen">
+									<td>Commercial Pension</td>
+									<td>0.3</td>
+									<td class="money">2,228</td>
+									<td class="money">106.1</td>
+								</tr>
+								<tr class="table" id="oth_pen">
+									<td>Other Pension</td>
+									<td>2.7</td>
+									<td class="money">1,485</td>
+									<td class="money">150.7</td>
 								</tr>
 							</table>
 							<div id="chart2"></div>
-							<p class="ps">(1 square equals to 20 people in the survey.)</p>
-							<h3>________________________________________________________<br>________________________________________________________</h3>
+							<p class="ps">(1 square equals to 30 people in the survey.)</p>
+							
 						</div>
 					</div>
+					<p>From the all the elderly who receive any pension benefits, 21.6% receive benefits from one of the two main public pension programs for urban workers, 10.7% from the firm basic pension program and 10.9% from the government or public agency worker pensions program. Thus, just as for medical insurance programs, pension programs provide very different benefit levels and thus remain highly segmented. So it is difficult to integrate programs or pool program finances in a way that will facilitate labor mobility. </p>
 				</div>
 			</div>
+			<h3>________________________________________________________<br>________________________________________________________</h3>
 
 			<div class="row">
 				<div class="col-12">
@@ -118,11 +137,16 @@
 
 					<p>Health insurance coverage rates are lower among the poor elderly, especially those with urban hukou, and among those living alone. Although health insurance coverage (medical relief included) rates are high for all groups, for those with urban hukou, the coverage rate for the poor elderly is 6.0% less than for the nonpoor elderly. </p>
 					<p>For those living alone, the coverage is 5.3% lower than those not living alone. For the rural-hukou people, health insurance coverage rates are 2.6% less for the poor elderly than the nonpoor and 6.1% less for those living alone than for those not living alone. Thus, economically and socially deprived groups also face greater vulnerability to health shocks. </p>
-					<div class="btns">
+<!--					<div class="btns">
 						<div class="btn" id="poverty">By Poverty Scheme</div>
 						<div class="btn" id="living">By Living Status</div>
 					</div>
-					<div id = "chart3"></div>
+ 					<div id = "chart3"></div>-->
+ <div style="max-width: 800px;">
+<div style="position: relative; height: 0; overflow: hidden; padding-bottom: 40%;">
+<iframe frameborder="0" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="responsive_bar.html"></iframe>
+</div>
+</div>						
 
 					<h3>________________________________________________________<br>________________________________________________________</h3>
 				</div>
