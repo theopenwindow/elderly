@@ -1,9 +1,9 @@
 		// this is the size of the svgDots container -- the white part
 			var fullwidth = 600,
-				fullheight = 300;
+				fullheight = 200;
 
 			// these are the margins around the graph. Axes labels go in margins.
-			var margin = {top: 50, right: 25, bottom: 20, left: 200};
+			var margin = {top: 0, right: 25, bottom: 50, left: 200};
 
 			var widthDots = fullwidth - margin.left - margin.right,
     		heightDots = fullheight - margin.top - margin.bottom;
@@ -151,14 +151,14 @@
 							return "black";
 						}
 					})
-					.style("fill", function(d){
+					.style("r", function(d){
 						if (d.change === "Add Private Transfers") {
-							return "#476BB2";
+							return heightScale.rangeBand()/3;
 						}
 					})
 					.append("title")
 					.text(function(d) {
-						return d.change + " in urban: " + d.urban + "％";
+						return d.change + " in urban: " + d.urban + "%";
 					});
 
 					// add the axes
@@ -172,20 +172,28 @@
 					.attr("class", "y axisDots")
 					.attr("transform", "translate(" + margin.left + ",0)")
 					.call(yAxisDots);
+		        	/*.attr("id", function(d){
+						if (d.change === "Respondent and Spouse Income") {
+							return "spouse";
+						}else if(d.change === "Pretransfer Household Income") {
+							return "pretransfer";
+						}else if(d.change === "Add Private Transfers") {
+							return "private";
+						}else if(d.change === "Add Public Transfers") {
+							return "public";
+						}else{
+							return "consumption";
+						}
+					})*/
 
 				svgDots.append("text")
 					.attr("class", "xlabel")
 		        	.attr("transform", "translate(" + (margin.left + widthDots/2 ) + " ," +
-		        				(heightDots + margin.bottom*3/2) + ")")
+		        				(heightDots + margin.bottom/2) + ")")
 		        	.style("text-anchor", "middle")
 		        	.attr("dy", "12")
 		        	.text("Elderly Poverty Rate");
 
-       	// Style one of the Y labels bold:
-
-        // a hack that works if you can unravel the selections - to style "The World" bold in the axis label, which is the 8th element:
-        var allyAxisDotsLabels = d3.selectAll("g.y.axis g.tick text")[0]; // un-nest array
-        d3.select(allyAxisDotsLabels[7]).style("font-weight", "bold");
-        	// You could also use tick formatting to get a % sign on each axis tick
 
 			});
+

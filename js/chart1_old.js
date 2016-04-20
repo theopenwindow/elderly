@@ -3,7 +3,7 @@
 	var fullWidthLine = 1200;
 	var fullHeightLine = 800;
 
-	var marginLine = 80;
+	var marginLine = 100;
 
 	var widthLine = fullWidthLine - marginLine - marginLine;
 	var heightLine = fullHeightLine - marginLine - marginLine;
@@ -137,6 +137,15 @@
 	        	.style("text-anchor", "middle")
 	        	.attr("dy", "12")
 	        	.text("Age");
+
+	    svgLine.append("text")
+	    		   .attr("class", "axis text")
+                   .attr("transform", "rotate(90)")
+                   .attr("y", "-1200")
+                   .attr("x", "400")
+                   .attr("dy", "1em")
+                   .style("text-anchor", "middle")
+                   .text("Employment Rate");    	
 	    
 /*	    svgLine.select(".y.axis")
 	        .append("line")
@@ -197,37 +206,27 @@
 	    
 //default:
 		d3.select("#group1").classed("selected", true);
-		d3.select("#p1").style("display", "block");
-	 	d3.select("#p2").style("display", "none");
-	 	d3.select("#p3").style("display", "none");
-	 	d3.select("#p4").style("display", "none");	
 //buttons:
 	    d3.selectAll("button").on("click",function(d){
-	        if(d3.select(this).attr("id") == "group1"){
-	        	d3.select("#p1").style("display", "block");
-	 		 	d3.select("#p2").style("display", "none");
-	 		 	d3.select("#p3").style("display", "none");
-	 		 	d3.select("#p4").style("display", "none");		        	
+	        if(d3.select(this).attr("id") == "group1"){	        	
 	            var newData = d3.merge([getVal("Total"), getVal("Total"), getVal("Total"),getVal("Total"),getVal("Total")]);
 	        }
 				
 
 	        else if(d3.select(this).attr("id") == "group2"){
-	        	d3.select("#p1").style("display", "none");
-	 		 	d3.select("#p2").style("display", "block");
-	 		 	d3.select("#p3").style("display", "block");
-	 		 	d3.select("#p4").style("display", "none");
 	            var newData = d3.merge([getVal("Total"), getVal("Rural"),getVal("Rural"),getVal("Urban"),getVal("Urban")]);
 	            d3.select("#t").style("display", "none");
 	        }
 	        else if(d3.select(this).attr("id") == "group3"){
-	        	d3.select("#p1").style("display", "none");
-	 		 	d3.select("#p2").style("display", "none");
-	 		 	d3.select("#p3").style("display", "none");
-	 		 	d3.select("#p4").style("display", "block");
 	            var newData = d3.merge([getVal("Total"), getVal("Rural_Male"),getVal("Rural_Female"),getVal("Urban_Male"),getVal("Urban_Female")]);
 	            d3.select("#t").style("display", "none");
-	        }
+	        };
+
+	        d3.selectAll("#call_hukou").on("click", function(d){
+	        	d3.select("#group2").classed("selected", true);
+	        	var newData = d3.merge([getVal("Total"), getVal("Rural"),getVal("Rural"),getVal("Urban"),getVal("Urban")]);
+	            d3.select("#t").style("display", "none");
+	        }); 
 
 
 	        d3.select(".y.axis.lineChart")
