@@ -37,7 +37,7 @@
 	    .scale(yScaleLine)
 	    .orient("right")
 	    .ticks(2)
-	    .tickFormat(function(d) { return d*100 +"%"; })
+	    /*.tickFormat(function(d) { return d*100 +"%"; })*/
 	    .tickPadding([-widthLine-7])
 	    .tickSize([widthLine]);
 
