@@ -412,4 +412,9 @@ h4 {
 
     a:link {
         text-decoration: none;
+        color: black;
+    }
+
+    a:visited {
+        color: black;
     }
