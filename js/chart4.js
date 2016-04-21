@@ -41,11 +41,6 @@
 					console.log("error reading file");
 				}
 
-/*				data.sort(function(a, b) {
-					return d3.descending(+a.urban, +b.urban);
-				});*/
-
-				// in this case, i know it's out of 100 because it's percents.
 				widthScale.domain([
 						0,
 						d3.max(data, function(d){
@@ -124,11 +119,11 @@
 					.attr("r", heightScale.rangeBand()/4)
 					.attr("cy", function(d) {
 						return heightScale(d.change) + heightScale.rangeBand()/2;
-					})
+					})/*
 					.append("title")
 					.text(function(d) {
-						return d.change + " in rural: " + d.rural + "％";
-					});
+						return d.change + " in rural: " + d.rural + "%";
+					})*/;
 
 				// Make the dots for urban
 
@@ -155,13 +150,19 @@
 						if (d.change === "Add Private Transfers") {
 							return heightScale.rangeBand()/3;
 						}
-					})
+					})/*
 					.append("title")
 					.text(function(d) {
 						return d.change + " in urban: " + d.urban + "%";
-					});
+					})*/;
 
-					// add the axes
+				//make the tooltip
+		        var tooltipDots = d3.select("#chart4")
+					.append("div")
+                	.attr("class", "tooltip");
+
+
+				// add the axes
 
 				svgDots.append("g")
 					.attr("class", "x axisDots")
@@ -172,19 +173,7 @@
 					.attr("class", "y axisDots")
 					.attr("transform", "translate(" + margin.left + ",0)")
 					.call(yAxisDots);
-		        	/*.attr("id", function(d){
-						if (d.change === "Respondent and Spouse Income") {
-							return "spouse";
-						}else if(d.change === "Pretransfer Household Income") {
-							return "pretransfer";
-						}else if(d.change === "Add Private Transfers") {
-							return "private";
-						}else if(d.change === "Add Public Transfers") {
-							return "public";
-						}else{
-							return "consumption";
-						}
-					})*/
+		        	
 
 				svgDots.append("text")
 					.attr("class", "xlabel")
@@ -192,7 +181,56 @@
 		        				(heightDots + margin.bottom/2) + ")")
 		        	.style("text-anchor", "middle")
 		        	.attr("dy", "12")
-		        	.text("Elderly Poverty Rate");
+		        	.text("Elderly Poverty Rate (%)");
+
+	
+
+        		dotsurban
+					.on("mouseover", mouseoverUrbanFunc)
+					.on("mousemove", mousemoveFunc)
+					.on("mouseout",	mouseoutFunc);
+
+				dotsrural
+					.on("mouseover", mouseoverRuralFunc)
+					.on("mousemove", mousemoveFunc)
+					.on("mouseout",	mouseoutFunc);	
+
+				function mouseoverUrbanFunc(d) {
+					d3.select(this)
+						.transition()
+						.attr("r", heightScale.rangeBand()/3);
+					tooltipDots
+						.style("display", null) 
+						.html("<p>Elderly Poverty Rate: "+d.urban+"%</p>");
+					};
+
+
+				function mouseoverRuralFunc(d) {
+					d3.select(this)
+						.transition()
+						.attr("r", heightScale.rangeBand()/3);
+					tooltipDots
+						.style("display", null) 
+						.html("<p>Elderly Poverty Rate: "+d.rural+"%</p>");
+					};
+
+				function mousemoveFunc(d) {
+					tooltipDots
+						.style("top", (d3.event.pageY - 10) + "px" )
+						.style("left", (d3.event.pageX + 10) + "px");
+					};
+
+
+			    function mouseoutFunc() {
+
+			    	d3.select(this)
+						.transition()
+						.duration(50)
+						.attr("r", heightScale.rangeBand()/4);
+			    	tooltipDots.style("display", "none");  
+	          		};
+
+
 
 
 			});

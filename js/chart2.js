@@ -125,10 +125,7 @@
         });
 
 //click table:
-            d3.selectAll("#default").on("click", function(d){
-            d3.selectAll(".ins").style("opacity", 1);
-            d3.selectAll(".table").style("background-color", "#fff");
-        });
+        
         d3.selectAll("#the_oldest").on("click", function(d){
             d3.selectAll(".ins").style("opacity", 0.3);
             d3.selectAll("#oldest").style("opacity", 1);
@@ -199,6 +196,7 @@
         d3.selectAll("#call_exp").on("click", function(d){
             d3.selectAll(".table").style("background-color", "#fff");                        
             d3.selectAll(".exp").style("background-color", "#c3e6e5");
+            d3.selectAll(".ins").style("opacity", 0.3);
             
         }); 
 
@@ -210,6 +208,12 @@
             d3.selectAll("#gov").style("opacity", 1);
             d3.selectAll("#government").style("background-color", "#c3e6e5");
         });     
+
+        d3.selectAll("#default").on("click", function(d){
+            d3.selectAll(".ins").style("opacity", 1);
+            d3.selectAll(".table").style("background-color", "#fff");
+            d3.selectAll(".exp").style("background-color", "#fff");
+        });
 
 
     })

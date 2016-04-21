@@ -198,7 +198,7 @@
  		 	labels_common.transition()
  		 		  .duration(300)
  		 		  .attr("transform", function(d,i){
-					  	return "translate("+(width/2+20)+ "," + (yScale(i)+20) +")";
+					  	return "translate("+(width/2+15)+ "," + (yScale(i)+20) +")";
 					  })
 				  .text(function(d){
 					  	return d.scheme;
