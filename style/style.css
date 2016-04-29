@@ -266,24 +266,55 @@ h4 {
     }
 
 /*table*/
-    table {
-        cursor: pointer;
-        width: 100%;}
-    th, td {
-        padding: 2px 0px 2px 10px;
-        border-spacing: 0px;
-        margin:0px;
+
+      div.tb_container {
+        height: 17px;
+        float: left;
+        width: 50%;
+      }
+
+      div.bar, div.bar2, div.bar3 {
+        height: 17px;
+        background-color: steelblue;
+      }
+      
+      table {
         font-family: 'Abel', sans-serif;
-        font-size: 13px;}
-    th {
+        font-size: 13px;
+        cursor: pointer;
+        vertical-align: middle;
+        text-align: left;
+        border-collapse: collapse;
+      }
+
+      tr:hover {
+        background-color: #c3e6e5;}
+
+      
+      td,th {
+        padding-top: 2px;
+        padding-bottom: 2px;
+      }
+      
+     /* th {
+        padding-left: 10px;
+      }*/
+      th {
         text-transform: uppercase;
+        
         border-bottom: 2px solid #111111;
         border-top: 1px solid #999;
-        text-align: left;}
-/*    tr.even {
-        background-color: #efefef;}*/
-    tr:hover {
-        background-color: #c3e6e5;}
+        text-align: left;
+      }
+      
+      
+      td.data {
+        padding-left: 10px;
+
+      }
+      td.value {
+        text-align: middle;
+      }
 
 /*chart 2*/
     #chart2 {

@@ -129,50 +129,50 @@
         d3.selectAll("#the_oldest").on("click", function(d){
             d3.selectAll(".ins").style("opacity", 0.3);
             d3.selectAll("#oldest").style("opacity", 1);
-            d3.selectAll(".table").style("background-color", "#fff");
+            d3.selectAll("tr").style("background-color", "#fff");
             d3.selectAll("#the_oldest").style("background-color", "#c3e6e5");
 
         });
         d3.selectAll("#new_rural").on("click", function(d){
             d3.selectAll(".ins").style("opacity", 0.3);
             d3.selectAll("#rural").style("opacity", 1);
-            d3.selectAll(".table").style("background-color", "#fff");            
+            d3.selectAll("tr").style("background-color", "#fff");            
             d3.selectAll("#new_rural").style("background-color", "#c3e6e5");
         });
         d3.selectAll("#urban_other").on("click", function(d){
             d3.selectAll(".ins").style("opacity", 0.3);
             d3.selectAll("#urban").style("opacity", 1);
-            d3.selectAll(".table").style("background-color", "#fff");                    
+            d3.selectAll("tr").style("background-color", "#fff");                    
             d3.selectAll("#urban_other").style("background-color", "#c3e6e5");
         });
         d3.selectAll("#firm_basic").on("click", function(d){
             d3.selectAll(".ins").style("opacity", 0.3);
             d3.selectAll("#firm").style("opacity", 1);
-            d3.selectAll(".table").style("background-color", "#fff");                        
+            d3.selectAll("tr").style("background-color", "#fff");                        
             d3.selectAll("#firm_basic").style("background-color", "#c3e6e5");
         });
         d3.selectAll("#firm_sup").on("click", function(d){
             d3.selectAll(".ins").style("opacity", 0.3);
             d3.selectAll("#sup").style("opacity", 1);
-            d3.selectAll(".table").style("background-color", "#fff");                        
+            d3.selectAll("tr").style("background-color", "#fff");                        
             d3.selectAll("#firm_sup").style("background-color", "#c3e6e5");
         });
         d3.selectAll("#government").on("click", function(d){
             d3.selectAll(".ins").style("opacity", 0.3);
             d3.selectAll("#gov").style("opacity", 1);
-            d3.selectAll(".table").style("background-color", "#fff");                        
+            d3.selectAll("tr").style("background-color", "#fff");                        
             d3.selectAll("#government").style("background-color", "#c3e6e5");
         });
         d3.selectAll("#com_pen").on("click", function(d){
             d3.selectAll(".ins").style("opacity", 0.3);
             d3.selectAll("#com").style("opacity", 1);
-            d3.selectAll(".table").style("background-color", "#fff");                        
+            d3.selectAll("tr").style("background-color", "#fff");                        
             d3.selectAll("#com_pen").style("background-color", "#c3e6e5");
         });
         d3.selectAll("#oth_pen").on("click", function(d){
             d3.selectAll(".ins").style("opacity", 0.3);
             d3.selectAll("#other").style("opacity", 1);
-            d3.selectAll(".table").style("background-color", "#fff");                        
+            d3.selectAll("tr").style("background-color", "#fff");                        
             d3.selectAll("#oth_pen").style("background-color", "#c3e6e5");
         });
 
