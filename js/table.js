@@ -1,4 +1,4 @@
-      var chartWidth = "80px";
+      var chartWidth = "70px";
 
       var data = [
         ["Pension Subsidy to the Oldest Old", 3.6, 111, 19.1, "the_oldest"],
