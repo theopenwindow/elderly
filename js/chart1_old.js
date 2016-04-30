@@ -290,7 +290,7 @@
 	            })
 	            .transition()
 	            .duration(1500)
-	            .attr("cy",function(d){console.log(d);return yScaleLine(+d.amount);})
+	            .attr("cy",function(d){return yScaleLine(+d.amount);})
 	            .attr("r",1.5)
 	            .attr("fill", function(d){
 	                if(d.scheme.startsWith("R")){
