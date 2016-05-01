@@ -15,7 +15,7 @@
  		 		];
 
  		var fullwidth_bar = 700,
- 			fullheight_bar = 120,
+ 			fullheight_bar = 150,
  			margin_bar=50;
 
  		 var width = 600;

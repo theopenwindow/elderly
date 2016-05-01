@@ -3,7 +3,7 @@
 	var fullWidthLine = 1200;
 	var fullHeightLine = 800;
 
-	var marginLine = 100;
+	var marginLine = 130;
 
 	var widthLine = fullWidthLine - marginLine - marginLine;
 	var heightLine = fullHeightLine - marginLine - marginLine;
@@ -16,15 +16,10 @@
 	var svgLine = d3.select("#chart1")
 	    .append("svg")
 	    .attr("class","lineChart")
-	    /*.attr("width",fullWidthLine)
-	    .attr("height",fullHeightLine)
-	    .append("g")
-	    */
 	    .attr("viewBox", "0 0 " + fullWidthLine + " " + fullHeightLine)
 		.style("max-width", fullWidthLine + "px")
 		.attr("preserveAspectRatio", "xMidYMid meet");
 
-	// showlegend();
 
 	var xAxisLine = d3.svg.axis()
 	    .scale(xScaleLine)
@@ -37,7 +32,7 @@
 	    .scale(yScaleLine)
 	    .orient("right")
 	    .ticks(2)
-	    /*.tickFormat(function(d) { return d*100 +"%"; })*/
+	    .tickFormat(function(d) { return d*100 +"%"; })
 	    .tickPadding([-widthLine-7])
 	    .tickSize([widthLine]);
 
@@ -75,6 +70,7 @@
 
 	        dataset.push({
 	            scheme: d.scheme,
+	            name:d.name,
 	            rates: employmentRates
 	        });
 	    });
@@ -128,12 +124,12 @@
 	        .attr("class","y axis lineChart")
 	        .selectAll("text")
 	        .style("text-anchor","end")
-	        .attr("transform", "translate("+(widthLine+marginLine*3/2)+",0)");
+	        .attr("transform", "translate("+(/*widthLine+*/marginLine*4/5)+",0)");
 
 	    svgLine.append("text")
 				.attr("class", "axis text")
 	        	.attr("transform", "translate(" + (marginLine + widthLine/2 ) + " ," +
-	        				(heightLine + marginLine*1.7) + ")")
+	        				(heightLine + marginLine*1.5) + ")")
 	        	.style("text-anchor", "middle")
 	        	.attr("dy", "12")
 	        	.text("Age");
@@ -141,16 +137,12 @@
 	    svgLine.append("text")
 	    		   .attr("class", "axis text")
                    .attr("transform", "rotate(90)")
-                   .attr("y", "-1200")
+                   .attr("y", "-50")
                    .attr("x", "400")
                    .attr("dy", "1em")
                    .style("text-anchor", "middle")
                    .text("Employment Rate");    	
 	    
-/*	    svgLine.select(".y.axis")
-	        .append("line")
-	        .attr("x2",widthLine)
-	        .attr("y2",0);*/
 	    
 	   groups.selectAll("circle")
 	        .data(function(d){return d.rates;})
@@ -170,7 +162,7 @@
 	        .attr("dy", -10)
 	        .style("text-anchor", "middle")
 	        .text(function(d){
-	            return d.amount;
+	            return d.amount * 100 + "%";
 	        });
 	    
 	    groups.append("text")
@@ -270,7 +262,8 @@
 	                return yScaleLine(+lastRates);
 	            })
 	            .text(function(d,i){
-	                    return newData[i].scheme;
+	            	console.log(newData);
+	                    return newData[i].name;
 	            })
 	            .attr("stroke", function(d,i,j){
 	                if(newData[i].rates[j].scheme.startsWith("R")){
@@ -319,7 +312,7 @@
 	                    return "#005f91";
 	                }})
 	            .text(function(d){
-	                return d.amount;
+	                return d.amount * 100;
 	            });
 	    });
 	});
