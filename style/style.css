@@ -36,9 +36,7 @@
 
 
 .container {
-/*	background-color: lightblue;
-*/margin-top:0;
-    margin-bottom: 5%;
+    margin-top:0;
 	height:2500px;
 }
 
@@ -416,9 +414,17 @@ h4 {
 /*footer*/    
 
     .footer {
-        margin-top: 5%;
-        margin-bottom:10%;
-        font-weight: bolder;
+        margin-top: 2%;
+        padding-bottom: 1%;
+        padding-top: 1%;
+        text-align: center;
+        border-top: solid thin #979999;
+        background-color: #efefef;
+    }
+
+    .footer p {
+        font-size: 12px;
+        font-family: serif;
     }
 
     a:link {
