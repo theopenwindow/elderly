@@ -136,9 +136,9 @@
 
 	    svgLine.append("text")
 	    		   .attr("class", "axis text")
-                   .attr("transform", "rotate(90)")
-                   .attr("y", "-50")
-                   .attr("x", "400")
+                   .attr("transform", "rotate(-90)")
+                   .attr("y", "15")
+                   .attr("x", "-400")
                    .attr("dy", "1em")
                    .style("text-anchor", "middle")
                    .text("Employment Rate");    	
